@@ -1,0 +1,294 @@
+openapi: 3.0.0
+info:
+  title: Beach Family Pools API
+  description: Beach Family Pools Services API
+  version: 1.0.0
+servers:
+- url: http://api.beachfamilypools.com:4000/api/v1
+paths:
+  /customers:
+    get:
+      tags:
+      - customers
+      summary: Returns a list of all customers
+      operationId: getCustomers
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customers'
+        "500":
+          description: Internal server error
+      x-swagger-router-controller: Customers
+    post:
+      tags:
+      - customers
+      summary: Adds a customer
+      operationId: addCustomer
+      requestBody:
+        $ref: '#/components/requestBodies/Customer'
+      responses:
+        "200":
+          description: JSON object with customer information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        "405":
+          description: Invalid input
+      x-swagger-router-controller: Customers
+  /customers/{id}:
+    get:
+      tags:
+      - customers
+      summary: Returns a single customer
+      operationId: getCustomerById
+      parameters:
+      - name: id
+        in: path
+        description: Id of customer to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: JSON object with customer information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        "400":
+          description: Invalid ID
+        "404":
+          description: Customer not found
+      x-swagger-router-controller: Customers
+    put:
+      tags:
+      - customers
+      summary: Updates an existing customer
+      operationId: updateCustomer
+      parameters:
+      - name: id
+        in: path
+        description: Id of customer to update
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      requestBody:
+        $ref: '#/components/requestBodies/Customer'
+      responses:
+        "200":
+          description: JSON object with customer information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        "400":
+          description: Invalid ID
+        "404":
+          description: Customer not found
+        "405":
+          description: Validation exception
+      x-swagger-router-controller: Customers
+  /addresses:
+    get:
+      tags:
+      - addresses
+      summary: Returns a list of all service addresses
+      operationId: getAddresses
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Addresses'
+        "500":
+          description: Internal server error
+      x-swagger-router-controller: Addresses
+    post:
+      tags:
+      - addresses
+      summary: Adds a service address
+      operationId: addAddress
+      requestBody:
+        $ref: '#/components/requestBodies/Address'
+      responses:
+        "200":
+          description: JSON object with service address information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Address'
+        "405":
+          description: Invalid input
+      x-swagger-router-controller: Addresses
+  /addresses/{id}:
+    get:
+      tags:
+      - addresses
+      summary: Returns a single service address
+      operationId: getAddressById
+      parameters:
+      - name: id
+        in: path
+        description: Id of service address to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: JSON object with service address information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Address'
+        "400":
+          description: Invalid ID
+        "404":
+          description: Service address not found
+      x-swagger-router-controller: Addresses
+    put:
+      tags:
+      - addresses
+      summary: Updates an existing service address
+      operationId: updateAddress
+      parameters:
+      - name: id
+        in: path
+        description: Id of customer to update
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      requestBody:
+        $ref: '#/components/requestBodies/Customer'
+      responses:
+        "200":
+          description: JSON object with service address information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Address'
+        "400":
+          description: Invalid ID
+        "404":
+          description: Address not found
+        "405":
+          description: Validation exception
+      x-swagger-router-controller: Addresses
+components:
+  schemas:
+    Customers:
+      type: array
+      items:
+        $ref: '#/components/schemas/Customer'
+    Customer:
+      required:
+      - emailAddress
+      - firstName
+      - lastName
+      - userRole
+      type: object
+      properties:
+        isAdmin:
+          type: boolean
+        userRole:
+          type: string
+          enum:
+          - employee
+          - customer
+          - vendor
+        firstName:
+          type: string
+        lastName:
+          type: string
+        phoneNumber:
+          type: string
+        emailAddress:
+          type: string
+        hash:
+          type: string
+      example:
+        firstName: firstName
+        lastName: lastName
+        emailAddress: emailAddress
+        phoneNumber: phoneNumber
+        isAdmin: true
+        userRole: employee
+        hash: hash
+    Addresses:
+      type: array
+      items:
+        $ref: '#/components/schemas/Address'
+    Address:
+      required:
+      - city
+      - postalCode
+      - state
+      - streetAddress
+      - userId
+      type: object
+      properties:
+        streetAddress:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        postalCode:
+          type: string
+        userId:
+          type: integer
+        mapUrl:
+          type: string
+        latitude:
+          type: string
+        longitude:
+          type: string
+      example:
+        streetAddress: streetAddress
+        city: city
+        postalCode: postalCode
+        latitude: latitude
+        mapUrl: mapUrl
+        state: state
+        userId: 0
+        longitude: longitude
+  responses:
+    Customer200:
+      description: JSON object with customer information
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Customer'
+    Address200:
+      description: JSON object with service address information
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Address'
+  requestBodies:
+    Customer:
+      description: JSON object with customer information
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Customer'
+      required: true
+    Address:
+      description: JSON object with service address information
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Address'
+      required: true
