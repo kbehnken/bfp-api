@@ -1,2 +1,2 @@
 SELECT * FROM service_addresses
-    WHERE id = $1;
+WHERE id = $1;

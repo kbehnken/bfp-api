@@ -186,20 +186,55 @@ paths:
         "405":
           description: Validation exception
       x-swagger-router-controller: Addresses
+  /serviceCalls:
+    get:
+      tags:
+      - service calls
+      summary: Returns a list of all service calls
+      operationId: getServiceCalls
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceCalls'
+        "500":
+          description: Internal server error
+      x-swagger-router-controller: ServiceCalls
+    post:
+      tags:
+      - service calls
+      summary: Adds a service call/work order
+      operationId: addServiceCall
+      requestBody:
+        $ref: '#/components/requestBodies/ServiceCall'
+      responses:
+        "200":
+          description: JSON object with service call information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceCalls'
+        "405":
+          description: Invalid input
+      x-swagger-router-controller: ServiceCalls
 components:
   schemas:
-    Customers:
+    Users:
       type: array
       items:
-        $ref: '#/components/schemas/Customer'
-    Customer:
+        $ref: '#/components/schemas/User'
+    User:
       required:
-      - emailAddress
+      - userRole
       - firstName
       - lastName
-      - userRole
+      - emailAddress
       type: object
       properties:
+        id:
+          type: integer
         isAdmin:
           type: boolean
         userRole:
@@ -219,13 +254,34 @@ components:
         hash:
           type: string
       example:
-        firstName: firstName
-        lastName: lastName
-        emailAddress: emailAddress
-        phoneNumber: phoneNumber
         isAdmin: true
         userRole: employee
+        firstName: firstName
+        lastName: lastName
+        phoneNumber: phoneNumber
+        emailAddress: emailAddress
         hash: hash
+    Customers:
+      type: array
+      items:
+        $ref: '#/components/schemas/Customer'
+    Customer:
+      required:
+      - customerName
+      type: object
+      properties:
+        id:
+          type: integer
+        customerName:
+          type: string
+        phoneNumber:
+          type: string
+        emailAddress:
+          type: string
+      example:
+        customerName: customerName
+        phoneNumber: phoneNumber
+        emailAddress: emailAddress
     Addresses:
       type: array
       items:
@@ -239,6 +295,8 @@ components:
       - userId
       type: object
       properties:
+        id:
+          type: string
         streetAddress:
           type: string
         city:
@@ -251,19 +309,104 @@ components:
           type: integer
         mapUrl:
           type: string
+        photoUrl:
+          type: string
         latitude:
           type: string
         longitude:
           type: string
+        customerId:
+          type: integer
+        vendorId:
+          type: integer
       example:
         streetAddress: streetAddress
         city: city
         postalCode: postalCode
-        latitude: latitude
-        mapUrl: mapUrl
         state: state
-        userId: 0
+        userId: null
+        mapUrl: mapUrl
+        photoUrl: photoUrl
+        latitude: latitude
         longitude: longitude
+        customerId: 1
+        vendorId: null
+    ServiceCalls:
+      type: array
+      items:
+        $ref: '#/components/schemas/ServiceCall'
+    ServiceCall:
+      required:
+      - serviceDate
+      - serviceAddressId
+      - userId
+      - technician
+      - startTime
+      - endTime
+      type: object
+      properties:
+        id:
+          type: string
+        serviceDate:
+          type: string
+        salt:
+          type: string
+        phosphates:
+          type: string
+        tds:
+          type: string
+        filterPsi:
+          type: string
+        chlorine:
+          type: string
+        ph:
+          type: string
+        alkalinity:
+          type: string
+        cya:
+          type: string
+        trichlorShock:
+          type: string
+        sodaAsh:
+          type: string
+        sodiumBicarbonate:
+          type: string
+        tabs:
+          type: integer
+        granularTrichlor:
+          type: string
+        phosphateRemover:
+          type: string
+        userid:
+          type: integer
+        serviceAddressId:
+          type: integer
+        technician:
+          type: string
+        startTime:
+          type: string
+        endTime:
+          type: string
+      example:
+        serviceDate: serviceDate
+        salt: salt
+        phosphates: phosphates
+        tds: tds
+        filterPsi: filterPsi
+        chlorine: chlorine
+        ph: ph
+        alkalinity: alkalinity
+        cya: cya
+        trichlorShock: trichlorShock
+        sodaAsh: sodaAsh
+        sodiumBicarbonate: sodiumBicarbonate
+        tabs: tabs
+        granularTrichlor: granularTrichlor
+        userid: 1
+        serviceAddressId: 4
+        technician: technician
+        startTime: startTime
+        endTime: endTime
   responses:
     Customer200:
       description: JSON object with customer information
@@ -291,4 +434,11 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Address'
+      required: true
+    ServiceCall:
+      description: JSON object with service call information
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ServiceCall'
       required: true
