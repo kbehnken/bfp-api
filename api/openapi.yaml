@@ -423,37 +423,45 @@ components:
       type: object
       properties:
         id:
-          type: string
-        serviceDate:
-          type: string
+          type: integer
         salt:
-          type: string
+          type: number
         phosphates:
-          type: string
+          type: number
         tds:
-          type: string
+          type: number
         filterPsi:
-          type: string
+          type: number
         chlorine:
-          type: string
+          type: number
         ph:
-          type: string
+          type: number
         alkalinity:
-          type: string
+          type: number
         cya:
-          type: string
+          type: number
         trichlorShock:
-          type: string
+          type: number
         sodaAsh:
-          type: string
+          type: number
         sodiumBicarbonate:
-          type: string
+          type: number
         tabs:
           type: integer
         granularTrichlor:
-          type: string
+          type: number
         phosphateRemover:
-          type: string
+          type: number
+        muriaticAcid:
+          type: number
+        sodiumThiosulfate:
+          type: number
+        stabilizer:
+          type: number
+        greenToClean:
+          type: number
+        de:
+          type: number
         userid:
           type: integer
         serviceAddressId:
@@ -465,25 +473,30 @@ components:
         endTime:
           type: string
       example:
-        serviceDate: serviceDate
-        salt: salt
-        phosphates: phosphates
-        tds: tds
-        filterPsi: filterPsi
-        chlorine: chlorine
-        ph: ph
-        alkalinity: alkalinity
-        cya: cya
-        trichlorShock: trichlorShock
-        sodaAsh: sodaAsh
-        sodiumBicarbonate: sodiumBicarbonate
-        tabs: tabs
-        granularTrichlor: granularTrichlor
+        salt: 3900.0
+        phosphates: null
+        tds: null
+        filterPsi: 30
+        chlorine: 15.0
+        ph: 8.4
+        alkalinity: 240
+        cya: 300
+        trichlorShock: 0
+        sodaAsh: 0
+        sodiumBicarbonate: 0
+        tabs: 1
+        granularTrichlor: 0
+        phosphateRemover: 0
+        muriaticAcid: 0
+        sodiumThiosulfate: 0
+        stabilizer: 0
+        greenToClean: 0
+        de: 0
         userid: 1
         serviceAddressId: 4
         technician: technician
-        startTime: startTime
-        endTime: endTime
+        startTime: 2018-01-21T00:00:00Z
+        endTime: 2018-01-21T00:00:00Z
   responses:
     Customer200:
       description: JSON object with customer information
