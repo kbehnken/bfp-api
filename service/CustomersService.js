@@ -7,7 +7,7 @@ let respondWithCode = require('../utils/writer').respondWithCode;
 exports.addCustomer = function(body) {
   return new Promise(async function(resolve, reject) {
     const { customerName, phoneNumber, emailAddress } = body;
-    await db.add_service_call([customerName, phoneNumber, emailAddress])
+    await db.add_customer([customerName, phoneNumber, emailAddress])
     .then(customer => {
       resolve(customer)
     })
