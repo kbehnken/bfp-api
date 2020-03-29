@@ -202,6 +202,22 @@ paths:
         "405":
           description: Validation exception
       x-swagger-router-controller: Addresses
+  /services:
+    get:
+      tags:
+      - services
+      summary: Returns a list of all services
+      operationId: getServices
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Services'
+        "500":
+          description: Internal server error
+      x-swagger-router-controller: Services
   /serviceCalls:
     get:
       tags:
@@ -374,6 +390,24 @@ components:
         longitude: longitude
         customerId: 1
         vendorId: null
+    Services:
+      type: array
+      items:
+        $ref: '#/components/schemas/Service'
+    Service:
+      required:
+      - name
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+      example:
+        name: name
+        description: description
     ServiceCalls:
       type: array
       items:
@@ -463,6 +497,18 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Address'
+    Service200:
+      description: JSON object with name of service
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Service'
+    ServiceCall200:
+      description: JSON object with service call information
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ServiceCall'
   requestBodies:
     Customer:
       description: JSON object with customer information
@@ -477,6 +523,13 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Address'
+      required: true
+    Service:
+      description: JSON object with name of service
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Service'
       required: true
     ServiceCall:
       description: JSON object with service call information
