@@ -1,5 +1,5 @@
 'use strict';
-
+let respondWithCode = require('../utils/writer').respondWithCode;
 
 /**
  * Adds a single service call/work order
@@ -8,54 +8,14 @@
  * returns ServiceCalls
  **/
 exports.addServiceCall = function(body) {
-  return new Promise(function(resolve, reject) {
-    var examples = {};
-    examples['application/json'] = [ {
-  "serviceDate" : "serviceDate",
-  "salt" : "salt",
-  "phosphates" : "phosphates",
-  "tds" : "tds",
-  "filterPsi" : "filterPsi",
-  "chlorine" : "chlorine",
-  "ph" : "ph",
-  "alkalinity" : "alkalinity",
-  "cya" : "cya",
-  "trichlorShock" : "trichlorShock",
-  "sodaAsh" : "sodaAsh",
-  "sodiumBicarbonate" : "sodiumBicarbonate",
-  "tabs" : "tabs",
-  "granularTrichlor" : "granularTrichlor",
-  "userid" : 1,
-  "serviceAddressId" : 4,
-  "technician" : "technician",
-  "startTime" : "startTime",
-  "endTime" : "endTime"
-}, {
-  "serviceDate" : "serviceDate",
-  "salt" : "salt",
-  "phosphates" : "phosphates",
-  "tds" : "tds",
-  "filterPsi" : "filterPsi",
-  "chlorine" : "chlorine",
-  "ph" : "ph",
-  "alkalinity" : "alkalinity",
-  "cya" : "cya",
-  "trichlorShock" : "trichlorShock",
-  "sodaAsh" : "sodaAsh",
-  "sodiumBicarbonate" : "sodiumBicarbonate",
-  "tabs" : "tabs",
-  "granularTrichlor" : "granularTrichlor",
-  "userid" : 1,
-  "serviceAddressId" : 4,
-  "technician" : "technician",
-  "startTime" : "startTime",
-  "endTime" : "endTime"
-} ];
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
+  return new Promise(async function(resolve, reject) {
+    await db.add_service_call([startTime, endTime, userId, salt, phosphates, tds, filterPsi, chlorine, ph, alkalinity, cya, trichlorShock, sodaAsh, sodiumBicarbonate, tabs, granularTrichlor, phosphateRemover, muriaticAcid, sodiumThiosulfate, stabilizer, greenToClean, de, serviceAddressId])
+    .then(serviceCall => {
+      resolve(serviceCall)
+    })
+    .catch(err => {
+      reject(respondWithCode(500, err));
+    });
   });
 }
 
@@ -67,34 +27,17 @@ exports.addServiceCall = function(body) {
  * returns ServiceCall
  **/
 exports.getServiceCallById = function(id) {
-  return new Promise(function(resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-  "serviceDate" : "serviceDate",
-  "salt" : "salt",
-  "phosphates" : "phosphates",
-  "tds" : "tds",
-  "filterPsi" : "filterPsi",
-  "chlorine" : "chlorine",
-  "ph" : "ph",
-  "alkalinity" : "alkalinity",
-  "cya" : "cya",
-  "trichlorShock" : "trichlorShock",
-  "sodaAsh" : "sodaAsh",
-  "sodiumBicarbonate" : "sodiumBicarbonate",
-  "tabs" : "tabs",
-  "granularTrichlor" : "granularTrichlor",
-  "userid" : 1,
-  "serviceAddressId" : 4,
-  "technician" : "technician",
-  "startTime" : "startTime",
-  "endTime" : "endTime"
-};
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
+  return new Promise(async function(resolve, reject) {
+    await db.get_service_call_by_id(id)
+    .then(serviceCall => {
+      if (serviceCall.length === 0) {
+        resolve(respondWithCode(404, "Service call not found"))
+      }
+      resolve(serviceCall)
+    })
+    .catch(err => {
+      reject(respondWithCode(500, err));
+    });
   });
 }
 
@@ -105,54 +48,14 @@ exports.getServiceCallById = function(id) {
  * returns ServiceCalls
  **/
 exports.getServiceCalls = function() {
-  return new Promise(function(resolve, reject) {
-    var examples = {};
-    examples['application/json'] = [ {
-  "serviceDate" : "serviceDate",
-  "salt" : "salt",
-  "phosphates" : "phosphates",
-  "tds" : "tds",
-  "filterPsi" : "filterPsi",
-  "chlorine" : "chlorine",
-  "ph" : "ph",
-  "alkalinity" : "alkalinity",
-  "cya" : "cya",
-  "trichlorShock" : "trichlorShock",
-  "sodaAsh" : "sodaAsh",
-  "sodiumBicarbonate" : "sodiumBicarbonate",
-  "tabs" : "tabs",
-  "granularTrichlor" : "granularTrichlor",
-  "userid" : 1,
-  "serviceAddressId" : 4,
-  "technician" : "technician",
-  "startTime" : "startTime",
-  "endTime" : "endTime"
-}, {
-  "serviceDate" : "serviceDate",
-  "salt" : "salt",
-  "phosphates" : "phosphates",
-  "tds" : "tds",
-  "filterPsi" : "filterPsi",
-  "chlorine" : "chlorine",
-  "ph" : "ph",
-  "alkalinity" : "alkalinity",
-  "cya" : "cya",
-  "trichlorShock" : "trichlorShock",
-  "sodaAsh" : "sodaAsh",
-  "sodiumBicarbonate" : "sodiumBicarbonate",
-  "tabs" : "tabs",
-  "granularTrichlor" : "granularTrichlor",
-  "userid" : 1,
-  "serviceAddressId" : 4,
-  "technician" : "technician",
-  "startTime" : "startTime",
-  "endTime" : "endTime"
-} ];
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
+  return new Promise(async function(resolve, reject) {
+    await db.get_service_calls()
+    .then(serviceCalls => {
+      resolve(serviceCalls)
+    })
+    .catch(err => {
+      reject(utils.respondWithCode(500, err));
+    });
   });
 }
 
