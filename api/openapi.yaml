@@ -414,10 +414,8 @@ components:
         $ref: '#/components/schemas/ServiceCall'
     ServiceCall:
       required:
-      - serviceDate
       - serviceAddressId
       - userId
-      - technician
       - startTime
       - endTime
       type: object

@@ -9,6 +9,7 @@ let respondWithCode = require('../utils/writer').respondWithCode;
  **/
 exports.addServiceCall = function(body) {
   return new Promise(async function(resolve, reject) {
+    const { startTime, endTime, userId, salt, phosphates, tds, filterPsi, chlorine, ph, alkalinity, cya, trichlorShock, sodaAsh, sodiumBicarbonate, tabs, granularTrichlor, phosphateRemover, muriaticAcid, sodiumThiosulfate, stabilizer, greenToClean, de, serviceAddressId } = body;
     await db.add_service_call([startTime, endTime, userId, salt, phosphates, tds, filterPsi, chlorine, ph, alkalinity, cya, trichlorShock, sodaAsh, sodiumBicarbonate, tabs, granularTrichlor, phosphateRemover, muriaticAcid, sodiumThiosulfate, stabilizer, greenToClean, de, serviceAddressId])
     .then(serviceCall => {
       resolve(serviceCall)
