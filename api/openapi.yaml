@@ -218,6 +218,33 @@ paths:
         "500":
           description: Internal server error
       x-swagger-router-controller: Services
+  /services/{id}:
+    get:
+      tags:
+      - services
+      summary: Returns a single service
+      operationId: getServiceById
+      parameters:
+      - name: id
+        in: path
+        description: Id of service to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: JSON object with service information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Service'
+        "400":
+          description: Invalid ID
+        "404":
+          description: Service not found
+      x-swagger-router-controller: Services
   /serviceCalls:
     get:
       tags:
