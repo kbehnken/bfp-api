@@ -18,19 +18,35 @@ exports.addCustomer = function(body) {
 }
 
 /**
- * Returns a list of all customers
- *
- * returns schema/ArrayOfCustomers
+ * Returns a list of all customers - An array of objects
  **/
 exports.getCustomers = function() {
-  return new Promise(function(resolve, reject) {
-    var examples = {};
-    examples['application/json'] = "{}";
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+  return new Promise(async function(resolve, reject) {
+    await db.get_customers()
+    .then(customers => {
+      resolve(customers)
+    })
+    .catch(err => {
+      reject(utils.respondWithCode(500, err));
+    });
+  })
+}
+
+/**
+ * Returns a single customer
+ **/
+exports.getCustomerById = function(id) {
+  return new Promise(async function(resolve, reject) {
+    await db.get_customer_by_id(id)
+    .then(customer => {
+       if (customer.length === 0){
+        resolve(respondWithCode(404, "Customer not found"))
+       }
+       resolve(customer)
+    })
+    .catch(err => {
+      reject(respondWithCode(500, err));
+    });
+  })
 }
 
