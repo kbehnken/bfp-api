@@ -3,9 +3,7 @@ let respondWithCode = require('../utils/writer').respondWithCode;
 
 
 /*
- * Returns a list of all service addresses
- *
- * returns schema/ArrayOfAddresses
+ * Returns a list of all service addresses - An array of objects
  **/
 exports.getAddresses = function() {
   return new Promise(async function(resolve, reject) {
@@ -21,10 +19,7 @@ exports.getAddresses = function() {
 
 /**
  * Returns a single service address
- *
- * id Integer Id of service address to return
- * no response value expected for this operation
- **/
+**/
 exports.getAddressById = function(id) {
   return new Promise(async function(resolve, reject) {
     await db.get_address_by_id(id)
