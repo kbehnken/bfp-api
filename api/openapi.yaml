@@ -245,6 +245,20 @@ paths:
         "404":
           description: Service not found
       x-swagger-router-controller: Services
+  /servicesToServiceCalls:
+    post:
+      tags:
+      - services
+      summary: Adds one or more service to a service call
+      operationId: addServicesToServiceCall
+      requestBody:
+        $ref: '#/components/requestBodies/ServicesToServiceCalls'
+      responses:
+        "200":
+          $ref: '#/components/responses/ServicesToServiceCalls200'
+        "405":
+          description: Invalid input
+      x-swagger-router-controller: Services
   /serviceCalls:
     get:
       tags:
@@ -378,7 +392,6 @@ components:
       - postalCode
       - state
       - streetAddress
-      - userId
       type: object
       properties:
         id:
@@ -403,8 +416,10 @@ components:
           type: string
         customerId:
           type: integer
+          description: Addresses must have either a customerId or a vendorId
         vendorId:
           type: integer
+          description: Addresses must have either a customerId or a vendorId
       example:
         streetAddress: streetAddress
         city: city
@@ -546,6 +561,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Service'
+    ServicesToServiceCalls200:
+      description: JSON object with updated service call
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ServiceCall'
     ServiceCall200:
       description: JSON object with service call information
       content:
@@ -573,6 +594,20 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Service'
+      required: true
+    ServicesToServiceCalls:
+      description: JSON object with a service call id and an array of service ids
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              serviceCallId:
+                type: integer
+              serviceIds:
+                type: array
+                items:
+                  type: integer
       required: true
     ServiceCall:
       description: JSON object with service call information
