@@ -14,11 +14,7 @@ paths:
       operationId: getUsers
       responses:
         "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Users'
+          $ref: '#/components/responses/Users200'
         "500":
           description: Internal server error
       x-swagger-router-controller: Users
@@ -30,11 +26,7 @@ paths:
       operationId: getCustomers
       responses:
         "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Customers'
+          $ref: '#/components/responses/Customers200'
         "500":
           description: Internal server error
       x-swagger-router-controller: Customers
@@ -47,13 +39,11 @@ paths:
         $ref: '#/components/requestBodies/Customer'
       responses:
         "200":
-          description: JSON object with customer information
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Customer'
-        "405":
-          description: Invalid input
+          $ref: '#/components/responses/Customer200'
+        "400":
+          description: Validation error
+        "500":
+          description: Internal server error          
       x-swagger-router-controller: Customers
   /customers/{id}:
     get:
@@ -72,15 +62,11 @@ paths:
           type: integer
       responses:
         "200":
-          description: JSON object with customer information
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Customer'
-        "400":
-          description: Invalid ID
+          $ref: '#/components/responses/Customer200'
         "404":
           description: Customer not found
+        "500":
+          description: Internal server error
       x-swagger-router-controller: Customers
     put:
       tags:
@@ -100,17 +86,13 @@ paths:
         $ref: '#/components/requestBodies/Customer'
       responses:
         "200":
-          description: JSON object with customer information
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Customer'
+          $ref: '#/components/responses/Customer200'
         "400":
-          description: Invalid ID
+          description: Validation error
         "404":
           description: Customer not found
-        "405":
-          description: Validation exception
+        "500":
+          description: Internal server error
       x-swagger-router-controller: Customers
   /addresses:
     get:
@@ -120,11 +102,7 @@ paths:
       operationId: getAddresses
       responses:
         "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Addresses'
+          $ref: '#/components/responses/Addresses200'
         "500":
           description: Internal server error
       x-swagger-router-controller: Addresses
@@ -137,13 +115,11 @@ paths:
         $ref: '#/components/requestBodies/Address'
       responses:
         "200":
-          description: JSON object with service address information
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Address'
-        "405":
-          description: Invalid input
+          $ref: '#/components/responses/Address200'
+        "400":
+          description: Validation error
+        "500":
+          description: Internal server error
       x-swagger-router-controller: Addresses
   /addresses/{id}:
     get:
@@ -162,15 +138,11 @@ paths:
           type: integer
       responses:
         "200":
-          description: JSON object with service address information
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Address'
-        "400":
-          description: Invalid ID
+          $ref: '#/components/responses/Address200'
         "404":
           description: Service address not found
+        "500":
+          description: Internal server error
       x-swagger-router-controller: Addresses
     put:
       tags:
@@ -190,17 +162,13 @@ paths:
         $ref: '#/components/requestBodies/Address'
       responses:
         "200":
-          description: JSON object with service address information
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Address'
+          $ref: '#/components/responses/Address200'
         "400":
-          description: Invalid ID
+          description: Validation error
         "404":
           description: Address not found
-        "405":
-          description: Validation exception
+        "500":
+          description: Internal server error
       x-swagger-router-controller: Addresses
   /services:
     get:
@@ -210,11 +178,7 @@ paths:
       operationId: getServices
       responses:
         "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Services'
+          $ref: '#/components/responses/Services200'
         "500":
           description: Internal server error
       x-swagger-router-controller: Services
@@ -235,29 +199,11 @@ paths:
           type: integer
       responses:
         "200":
-          description: JSON object with service information
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Service'
-        "400":
-          description: Invalid ID
+          $ref: '#/components/responses/Service200'
         "404":
           description: Service not found
-      x-swagger-router-controller: Services
-  /servicesToServiceCalls:
-    post:
-      tags:
-      - services
-      summary: Adds one or more service to a service call
-      operationId: addServicesToServiceCall
-      requestBody:
-        $ref: '#/components/requestBodies/ServicesToServiceCalls'
-      responses:
-        "200":
-          $ref: '#/components/responses/ServicesToServiceCalls200'
-        "405":
-          description: Invalid input
+        "500":
+          description: Internal server error  
       x-swagger-router-controller: Services
   /serviceCalls:
     get:
@@ -267,11 +213,7 @@ paths:
       operationId: getServiceCalls
       responses:
         "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceCalls'
+          $ref: '#/components/responses/ServiceCalls200'
         "500":
           description: Internal server error
       x-swagger-router-controller: ServiceCalls
@@ -284,13 +226,11 @@ paths:
         $ref: '#/components/requestBodies/ServiceCall'
       responses:
         "200":
-          description: JSON object with service call information
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceCall'
-        "405":
-          description: Invalid input
+          $ref: '#/components/responses/ServiceCall200'
+        "400":
+          description: Validation error
+        "500":
+          description: Internal server error
       x-swagger-router-controller: ServiceCalls
   /serviceCalls/{id}:
     get:
@@ -309,16 +249,38 @@ paths:
           type: integer
       responses:
         "200":
-          description: JSON object with service address information
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceCall'
-        "400":
-          description: Invalid ID
+          $ref: '#/components/responses/ServiceCall200'
         "404":
           description: Service call not found
+        "500":
+          description: Internal server error  
       x-swagger-router-controller: ServiceCalls
+    put:
+        tags:
+        - service calls
+        summary: Updates an existing service call
+        operationId: updateServiceCall
+        parameters:
+        - name: id
+          in: path
+          description: Id of service call to update
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: integer
+        requestBody:
+          $ref: '#/components/requestBodies/ServiceCall'
+        responses:
+          "200":
+            $ref: '#/components/responses/ServiceCall200'
+          "400":
+            description: Validation error
+          "404":
+            description: Service call not found
+          "500":
+            description: Internal server error
+        x-swagger-router-controller: ServiceCalls
 components:
   schemas:
     Users:
@@ -543,36 +505,60 @@ components:
         endTime: 2018-01-21T00:00:00Z
         servicesPerformed: [1, 2, 3]
   responses:
+    Users200:
+      description: JSON array of user objects
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Users'
     Customer200:
       description: JSON object with customer information
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Customer'
+    Customers200:
+      description: JSON array of customer objects
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Customers'
     Address200:
       description: JSON object with service address information
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Address'
+    Addresses200:
+      description: JSON array of service address objects
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Addresses'
     Service200:
-      description: JSON object with name of service
+      description: JSON object with service information
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Service'
-    ServicesToServiceCalls200:
-      description: JSON object with updated service call
+    Services200:
+      description: JSON array of service objects
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ServiceCall'
+            $ref: '#/components/schemas/Services'
     ServiceCall200:
       description: JSON object with service call information
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ServiceCall'
+    ServiceCalls200:
+      description: JSON array of service call objects
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ServiceCalls'
   requestBodies:
     Customer:
       description: JSON object with customer information
@@ -594,20 +580,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Service'
-      required: true
-    ServicesToServiceCalls:
-      description: JSON object with a service call id and an array of service ids
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              serviceCallId:
-                type: integer
-              serviceIds:
-                type: array
-                items:
-                  type: integer
       required: true
     ServiceCall:
       description: JSON object with service call information
