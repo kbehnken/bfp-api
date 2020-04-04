@@ -497,6 +497,10 @@ components:
           type: string
         endTime:
           type: string
+        servicesPerformed:
+          type: array
+          items:
+            type: integer
       example:
         salt: 3900.0
         phosphates: null
@@ -522,6 +526,7 @@ components:
         technician: technician
         startTime: 2018-01-21T00:00:00Z
         endTime: 2018-01-21T00:00:00Z
+        servicesPerformed: [1, 2, 3]
   responses:
     Customer200:
       description: JSON object with customer information
