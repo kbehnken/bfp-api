@@ -32,3 +32,13 @@ module.exports.getServiceCalls = function getServiceCalls (req, res, next) {
       utils.writeJson(res, response);
     });
 };
+
+module.exports.updateServiceCall = function updateServiceCall (req, res, next, body, id) {
+  ServiceCalls.updateServiceCall(body, id)
+    .then(function (response) {
+      utils.writeJson(res, response);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
+};
