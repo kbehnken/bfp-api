@@ -1,4 +1,5 @@
 'use strict';
+let { addServiceToServiceCall, removeAllServicesFromServiceCall } = require('./ServicesToServiceCallsService')
 let respondWithCode = require('../utils/writer').respondWithCode;
 
 /**
@@ -17,6 +18,23 @@ exports.addServiceCall = function(body) {
     .catch(err => {
       reject(respondWithCode(500, err));
     });
+  });
+}
+
+exports.updateServiceCall = function(body, id) {
+  return new Promise(async function(resolve, reject) {
+    const { startTime, endTime, userId, servicesPerformed, salt, phosphates, tds, filterPsi, chlorine, ph, alkalinity, cya, trichlorShock, sodaAsh, sodiumBicarbonate, tabs, granularTrichlor, phosphateRemover, muriaticAcid, sodiumThiosulfate, stabilizer, greenToClean, de, serviceAddressId } = body;
+    await db.update_service_call([startTime, endTime, userId, salt, phosphates, tds, filterPsi, chlorine, ph, alkalinity, cya, trichlorShock, sodaAsh, sodiumBicarbonate, tabs, granularTrichlor, phosphateRemover, muriaticAcid, sodiumThiosulfate, stabilizer, greenToClean, de, serviceAddressId, id])
+    .then(serviceCall => {
+      resolve(serviceCall)
+    })
+    .catch(err => {
+      reject(respondWithCode(500, err));
+    });
+    removeAllServicesFromServiceCall(id);
+    for(let i = 0; i < servicesPerformed.length; i++) {
+      addServiceToServiceCall(servicesPerformed[i], id)
+    }
   });
 }
 
