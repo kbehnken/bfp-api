@@ -281,6 +281,33 @@ paths:
           "500":
             description: Internal server error
         x-swagger-router-controller: ServiceCalls
+  /travelEvents:
+    get:
+      tags:
+      - travel events
+      summary: Returns a list of all travel events
+      operationId: getTravelEvents
+      responses:
+        "200":
+          $ref: '#/components/responses/TravelEvents200'
+        "500":
+          description: Internal server error
+      x-swagger-router-controller: TravelEvents
+    post:
+      tags:
+      - travel events
+      summary: Adds a single travel event
+      operationId: addTravelEvent
+      requestBody:
+        $ref: '#/components/requestBodies/TravelEvent'
+      responses:
+        "200":
+          $ref: '#/components/responses/TravelEvent200'
+        "400":
+          description: Validation error
+        "500":
+          description: Internal server error          
+      x-swagger-router-controller: Customers
 components:
   schemas:
     Users:
@@ -373,9 +400,9 @@ components:
         photoUrl:
           type: string
         latitude:
-          type: string
+          type: number
         longitude:
-          type: string
+          type: number
         customerId:
           type: integer
           description: Addresses must have either a customerId or a vendorId
@@ -504,6 +531,42 @@ components:
         startTime: 2018-01-21T00:00:00Z
         endTime: 2018-01-21T00:00:00Z
         servicesPerformed: [1, 2, 3]
+    TravelEvents:
+      type: array
+      items:
+        $ref: '#/components/schemas/TravelEvent'
+    TravelEvent:
+      required:
+      - eventTime
+      - latitude
+      - longitude
+      - eventType
+      - addressId
+      - userId
+      type: object
+      properties:
+        id:
+          type: integer
+        eventTime:
+          type: string
+        latitude:
+          type: number
+        longitude:
+          type: number
+        eventType:
+          type: string
+          enum: [arrival, departure]
+        addressId:
+          type: integer
+        userId:
+          type: integer
+      example:
+        eventTime: 2018-01-21T00:00:00Z
+        latitude: latitude
+        longitude: longitude
+        eventType: arrival
+        addressId: 1
+        userId: 3
   responses:
     Users200:
       description: JSON array of user objects
@@ -559,6 +622,18 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ServiceCalls'
+    TravelEvent200:
+      description: JSON object with travel event information
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TravelEvent'
+    TravelEvents200:
+      description: JSON array of travel event objects
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TravelEvents'
   requestBodies:
     Customer:
       description: JSON object with customer information
@@ -587,4 +662,11 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ServiceCall'
+      required: true
+    TravelEvent:
+      description: JSON object with travel event information
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TravelEvent'
       required: true
