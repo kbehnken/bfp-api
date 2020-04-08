@@ -47,12 +47,24 @@ exports.updateServiceCall = function(body, id) {
  **/
 exports.getServiceCallById = function(id) {
   return new Promise(async function(resolve, reject) {
+    let serviceCall = {};
+    let servicesPerformed = [];
     await db.get_service_call_by_id(id)
-    .then(serviceCall => {
-      if (serviceCall.length === 0) {
-        resolve(respondWithCode(404, "Service call not found"))
+    .then(results => {
+      if (results.length === 0) {
+        resolve(respondWithCode(404, "Service call not found"));
       }
-      resolve(serviceCall)
+      for(let i = 0; i < results.length; i++) {
+        if(i === 0) {
+          Object.assign(serviceCall, results[i])
+          delete serviceCall.serviceName;
+          delete serviceCall.serviceId;
+        }
+        servicesPerformed.push({"name": results[i].serviceName, "id": results[i].serviceId});
+      }
+      serviceCall.servicesPerformed = servicesPerformed;
+      console.log(serviceCall);
+      resolve(serviceCall);
     })
     .catch(err => {
       reject(respondWithCode(500, err));
