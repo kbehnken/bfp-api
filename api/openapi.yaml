@@ -170,6 +170,41 @@ paths:
         "500":
           description: Internal server error
       x-swagger-router-controller: Addresses
+  /assets:
+    get:
+      tags:
+      - assets
+      summary: Returns a list of all assets
+      operationId: getAssets
+      responses:
+        "200":
+          $ref: '#/components/responses/Assets200'
+        "500":
+          description: Internal server error
+      x-swagger-router-controller: Assets
+  /assets/{id}:
+    get:
+      tags:
+      - assets
+      summary: Returns a single asset
+      operationId: getAssetById
+      parameters:
+      - name: id
+        in: path
+        description: Id of asset to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          $ref: '#/components/responses/Asset200'
+        "404":
+          description: Asset not found
+        "500":
+          description: Internal server error  
+      x-swagger-router-controller: Assets
   /services:
     get:
       tags:
@@ -409,6 +444,10 @@ components:
         vendorId:
           type: integer
           description: Addresses must have either a customerId or a vendorId
+        assets:
+          type: array
+          items:
+            type: integer
       example:
         streetAddress: streetAddress
         city: city
@@ -421,6 +460,31 @@ components:
         longitude: longitude
         customerId: 1
         vendorId: null
+        assets: [1, 2, 3]
+    Assets:
+      type: array
+      items:
+        $ref: '#/components/schemas/Asset'
+    Asset:
+      required:
+      - name
+      type: object
+      properties:
+        id:
+          type: integer
+        make:
+          type: string
+        model:
+          type: string
+        category:
+          type: string
+        notes:
+          type: string
+      example:
+        make: make
+        model: model
+        category: category
+        notes: notes
     Services:
       type: array
       items:
@@ -598,6 +662,18 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Addresses'
+    Asset200:
+      description: JSON object with asset information
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Asset'
+    Assets200:
+      description: JSON array of asset objects
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Assets'
     Service200:
       description: JSON object with service information
       content:
@@ -648,6 +724,13 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Address'
+      required: true
+    Asset:
+      description: JSON object with asset information
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Asset'
       required: true
     Service:
       description: JSON object with name of service
