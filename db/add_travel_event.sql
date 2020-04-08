@@ -3,5 +3,4 @@ INSERT INTO travel_events
 VALUES
 ($1, $2, $3, $4, $5);
 
-SELECT * FROM travel_events
-WHERE id = lastval();
+RETURNING id, event_time AS eventTime, latitude, longitude, service_address_id AS serviceAddressId, user_id AS userId;
