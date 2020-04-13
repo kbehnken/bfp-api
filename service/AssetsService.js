@@ -2,13 +2,13 @@
 let respondWithCode = require('../utils/writer').respondWithCode;
 
 /**
- * Returns a list of all services - An array of objects
+ * Returns a list of all assets - An array of objects
  **/
-exports.getServices = function() {
+exports.getAssets = function() {
   return new Promise(async function(resolve, reject) {
-    await db.get_services()
-    .then(services => {
-      resolve(services)
+    await db.get_assets()
+    .then(assets => {
+      resolve(assets)
     })
     .catch(err => {
       reject(utils.respondWithCode(500, err));
@@ -17,16 +17,16 @@ exports.getServices = function() {
 }
 
 /**
- * Returns a single service
+ * Returns a single asset
  **/
-exports.getServiceById = function(id) {
+exports.getAssetById = function(id) {
   return new Promise(async function(resolve, reject) {
-    await db.get_service_by_id(id)
-    .then(service => {
-       if (service.length === 0){
-        resolve(respondWithCode(404, "Service not found"))
+    await db.get_asset_by_id(id)
+    .then(asset => {
+       if (asset.length === 0){
+        resolve(respondWithCode(404, "Asset not found"))
        }
-       resolve(service)
+       resolve(asset)
     })
     .catch(err => {
       reject(respondWithCode(500, err));
