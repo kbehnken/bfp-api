@@ -2,9 +2,9 @@
 let respondWithCode = require('../utils/writer').respondWithCode;
 
 /**
- * Adds a single service to a service call/work order
+ * Adds a single asset to a service address
  **/
-exports.addAssetToServiceCall = function(body) {
+exports.addAssetToServiceAddres = function(body) {
   return new Promise(async function(resolve, reject) {
     const { assetId, serviceAddressId } = body;
     await db.add_asset_to_service_address(assetId, serviceAddressId)
@@ -18,7 +18,7 @@ exports.addAssetToServiceCall = function(body) {
 }
 
 /**
- * Removes a single service from a service call/work order
+ * Removes a single asset from a service address
  **/
 exports.removeAssetFromServiceAddress = function(body) {
   return new Promise(async function(resolve, reject) {
@@ -34,9 +34,9 @@ exports.removeAssetFromServiceAddress = function(body) {
 }
 
 /**
- * Removes all services from a service call/work order
+ * Removes all assets from a service address
  **/
-exports.removeAllAssetsFromServiceCall = function(body) {
+exports.removeAllAssetsFromServiceAddress = function(body) {
   return new Promise(async function(resolve, reject) {
     const { serviceAddressId } = body;
     await db.remove_all_assets_from_service_address(serviceAddressId)
