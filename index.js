@@ -1,17 +1,16 @@
 'use strict';
+require('dotenv').config();
 
-const CONNECTION_STRING="postgres://fzqswhpbjgkttw:4d53d8109e37bb0502fcab8870ca48ecd4181398692a76694bda65b4326f0ed1@ec2-174-129-33-75.compute-1.amazonaws.com:5432/dvf792sv236dr?ssl=true"
-const SESSION_SECRET="wertwertgfhlkjoiuertsdfgsdgfopuiqwertzxcv"
+const path = require('path');
+const http = require('http');
+const massive = require('massive');
 
-var path = require('path');
-var http = require('http');
-var massive = require('massive');
+const oas3Tools = require('oas3-tools');
+const serverPort = 4000;
 
-var oas3Tools = require('oas3-tools');
-var serverPort = 4000;
-
+const { CONNECTION_STRING } = process.env;
 massive(CONNECTION_STRING).then(db => {
-  global.db = db;
+  app.set('db', db);
   console.log('db connected');
 });
 
