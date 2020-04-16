@@ -1,4 +1,5 @@
 *.code-workspace
 node_modules
 package-lock.json
+indexCopy.js
 .env
