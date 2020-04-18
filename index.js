@@ -1,5 +1,8 @@
 'use strict';
+
 require('dotenv').config();
+const Sequelize = require('sequelize');
+let {DataTypes} = require('sequelize');
 
 const path = require('path');
 const http = require('http');
@@ -8,12 +11,21 @@ const massive = require('massive');
 const oas3Tools = require('oas3-tools');
 const serverPort = 4000;
 
-const { CONNECTION_STRING } = process.env;
-massive(CONNECTION_STRING).then(db => {
-  app.set('db', db);
-  console.log('db connected');
+const { DB, DB_USER, DB_PASSWORD } = process.env;
+global.sequelize = new Sequelize(DB, DB_USER, DB_PASSWORD, {
+  dialect: 'mysql'
 });
 
+sequelize.authenticate()
+.then(() => console.log("Database connected"))
+.catch(err => {
+    console.log("Could not connect to database", err);
+});
+
+global.Customer = sequelize.import('./models/customers.js');
+global.Address = sequelize.import('./models/address.js');
+
+sequelize.sync();
 // swaggerRouter configuration
 var options = {
     controllers: path.join(__dirname, './controllers')

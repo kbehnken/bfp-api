@@ -5,6 +5,7 @@ let respondWithCode = require('../utils/writer').respondWithCode;
 /*
  * Returns a list of all service addresses - An array of objects
  **/
+/*
 exports.getAddresses = function() {
   return new Promise(async function(resolve, reject) {
     await db.get_addresses()
@@ -16,7 +17,10 @@ exports.getAddresses = function() {
     });
   })
 }
-
+exports.getAddresses = function() {
+  return new Promise(async function(resolve, reject) {
+    await User.getOne(1)
+*/
 /**
  * Returns a single service address
 **/

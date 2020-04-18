@@ -22,7 +22,7 @@ exports.addCustomer = function(body) {
  **/
 exports.getCustomers = function() {
   return new Promise(async function(resolve, reject) {
-    await db.get_customers()
+    await Customer.findAll()
     .then(customers => {
       resolve(customers)
     })

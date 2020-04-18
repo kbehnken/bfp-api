@@ -1,224 +1,250 @@
-CREATE TABLE users
-(
-  id SERIAL PRIMARY KEY,
-  is_admin BOOLEAN,
-  user_role VARCHAR(40) NOT NULL,
-  first_name VARCHAR(40) NOT NULL,
-  last_name VARCHAR(40) NOT NULL,
-  phone_number VARCHAR(40),
-  email_address VARCHAR(60) NOT NULL,
-  hash text
-);
+-- MySQL dump 10.16  Distrib 10.1.44-MariaDB, for debian-linux-gnu (x86_64)
+--
+-- Host: localhost    Database: bfp_api
+-- ------------------------------------------------------
+-- Server version	10.1.44-MariaDB-0ubuntu0.18.04.1
 
-CREATE TABLE customers
-(
-  id SERIAL PRIMARY KEY,
-  customer_name VARCHAR(40) NOT NULL,
-  phone_number VARCHAR(40),
-  email_address VARCHAR(60)
-);
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-CREATE TABLE vendors
-(
-  id SERIAL PRIMARY KEY,
-  vendor_name VARCHAR(40) NOT NULL,
-  phone_number VARCHAR(40),
-  email_address VARCHAR(60)
-);
+--
+-- Table structure for table `addresses`
+--
 
-CREATE TABLE service_addresses
-(
-  id SERIAL PRIMARY KEY,
-  street_address VARCHAR(70) NOT NULL,
-  city VARCHAR(40) NOT NULL,
-  state VARCHAR(40) NOT NULL,
-  postal_code VARCHAR(10) NOT NULL,
-  user_id INTEGER REFERENCES users(id),
-  map_url VARCHAR(70),
-  photo_url VARCHAR(70),
-  latitude real,
-  longitude real 
-);
+DROP TABLE IF EXISTS `addresses`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `addresses` (
+  `address_id` int(11) NOT NULL AUTO_INCREMENT,
+  `street_address` varchar(70) NOT NULL,
+  `city` varchar(40) NOT NULL,
+  `state` varchar(40) NOT NULL,
+  `postal_code` varchar(10) NOT NULL,
+  `customer_id` int(11) DEFAULT NULL,
+  `vendor_id` int(11) DEFAULT NULL,
+  `map_url` varchar(70) DEFAULT NULL,
+  `photo_url` varchar(70) DEFAULT NULL,
+  `latitude` float DEFAULT NULL,
+  `longitude` float DEFAULT NULL,
+  PRIMARY KEY (`address_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-CREATE TABLE assets
-(
-  id SERIAL PRIMARY KEY,
-  make VARCHAR(70) NOT NULL,
-  model VARCHAR(70) NOT NULL,
-  category VARCHAR(70) NOT NULL,
-  notes TEXT
-);
+--
+-- Table structure for table `assets`
+--
 
-CREATE TABLE assets_to_service_addresses
-(
-  PRIMARY KEY (asset_id, service_address_id),
-  asset_id INTEGER REFERENCES assets(id),
-  service_address_id INTEGER REFERENCES service_address(id)
-);
+DROP TABLE IF EXISTS `assets`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `assets` (
+  `asset_id` int(11) NOT NULL AUTO_INCREMENT,
+  `make` varchar(70) NOT NULL,
+  `model` varchar(70) NOT NULL,
+  `category` varchar(70) NOT NULL,
+  `notes` text,
+  PRIMARY KEY (`asset_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-CREATE TABLE service_calls
-(
-  id SERIAL PRIMARY KEY,
-  start_time TIMESTAMP,
-  end_time TIMESTAMP,
-  user_id INTEGER REFERENCES users(id),
-  salt REAL,
-  phosphates REAL,
-  tds REAL,
-  filter_psi REAL,
-  chlorine REAL,
-  ph REAL,
-  alkalinity REAL,
-  cya REAL,
-  trichlor_shock REAL,
-  soda_ash REAL,
-  sodium_bicarbonate REAL,
-  tabs INTEGER,
-  granular_trichlor REAL,
-  phosphate_remover REAL,
-  muriatic_acid REAL,
-  sodium_thiosulfate REAL,
-  stabilizer REAL,
-  green_to_clean REAL,
-  de REAL,
-  service_address_id INTEGER REFERENCES service_addresses(id)
-);
+--
+-- Table structure for table `assets_to_addresses`
+--
 
-CREATE TABLE services
-(
-  id SERIAL PRIMARY KEY,
-  name VARCHAR(70) NOT NULL,
-  description TEXT
-);
+DROP TABLE IF EXISTS `assets_to_addresses`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `assets_to_addresses` (
+  `asset_id` int(11) NOT NULL,
+  `address_id` int(11) NOT NULL,
+  PRIMARY KEY (`asset_id`,`address_id`),
+  KEY `address_id` (`address_id`),
+  CONSTRAINT `assets_to_addresses_ibfk_1` FOREIGN KEY (`asset_id`) REFERENCES `assets` (`asset_id`),
+  CONSTRAINT `assets_to_addresses_ibfk_2` FOREIGN KEY (`address_id`) REFERENCES `addresses` (`address_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-CREATE TABLE services_to_service_calls
-(
-  PRIMARY KEY (service_id, service_call_id),
-  service_id INTEGER REFERENCES services(id),
-  service_call_id INTEGER REFERENCES service_calls(id)
-);
+--
+-- Table structure for table `customers`
+--
 
-CREATE TABLE equipment
-(
-  id SERIAL PRIMARY KEY,
-  name VARCHAR(70) NOT NULL,
-  description TEXT,
-  service_address_id INTEGER REFERENCES service_addresses(id),
-  category VARCHAR(40)
-);
+DROP TABLE IF EXISTS `customers`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `customers` (
+  `customer_id` int(11) NOT NULL AUTO_INCREMENT,
+  `customer_name` varchar(40) NOT NULL,
+  `phone_number` varchar(40) DEFAULT NULL,
+  `email_address` varchar(60) DEFAULT NULL,
+  PRIMARY KEY (`customer_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-CREATE TABLE photos
-(
-  id SERIAL PRIMARY KEY,
-  date_taken VARCHAR(40),
-  category VARCHAR(40),
-  photo_url VARCHAR(70),
-  user_id INTEGER REFERENCES users(id),
-  service_call_id INTEGER REFERENCES service_calls(id)
-);
+--
+-- Table structure for table `photos`
+--
 
-CREATE TABLE invoices
-(
-  id SERIAL PRIMARY KEY,
-  service_start TIMESTAMP NOT NULL,
-  service_end TIMESTAMP NOT NULL,
-  invoice_number INTEGER NOT NULL,
-  invoice_amount INTEGER NOT NULL,
-  payment_date TIMESTAMP,
-  payment_type varchar(40),
-  payment_amount INTEGER,
-  invoice_balance INTEGER,
-  invoice_status varchar(40),
-  user_id INTEGER REFERENCES users(id),
-  service_address_id INTEGER REFERENCES service_addresses(id),
-  invoice_url  varchar(70)
-);
+DROP TABLE IF EXISTS `photos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `photos` (
+  `photo_id` int(11) NOT NULL AUTO_INCREMENT,
+  `date_taken` varchar(40) DEFAULT NULL,
+  `category` varchar(40) DEFAULT NULL,
+  `photo_url` varchar(70) DEFAULT NULL,
+  `service_call_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`photo_id`),
+  KEY `service_call_id` (`service_call_id`),
+  CONSTRAINT `photos_ibfk_1` FOREIGN KEY (`service_call_id`) REFERENCES `service_calls` (`service_call_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-CREATE TABLE travel_events
-(
-id SERIAL PRIMARY KEY,
-event_time TIMESTAMP NOT NULL,
-latitude REAL NOT NULL,
-longitude REAL NOT NULL,
-event_type VARCHAR(20) NOT NULL,
-service_address_id INTEGER REFERENCES service_addresses(id),
-user_id INTEGER REFERENCES users(id)
-);
+--
+-- Table structure for table `service_calls`
+--
 
-INSERT INTO assets
-(make, model, category, notes) 
-VALUES
-(
-'Pentair',
-'011056',
-'Pump',
-'IntelliFlo VSF WEF 6.1 THP 3.95'
-);
+DROP TABLE IF EXISTS `service_calls`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `service_calls` (
+  `service_call_id` int(11) NOT NULL AUTO_INCREMENT,
+  `start_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `end_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `user_id` int(11) DEFAULT NULL,
+  `salt` float DEFAULT NULL,
+  `phosphates` float DEFAULT NULL,
+  `tds` float DEFAULT NULL,
+  `filter_psi` float DEFAULT NULL,
+  `chlorine` float DEFAULT NULL,
+  `ph` float DEFAULT NULL,
+  `alkalinity` float DEFAULT NULL,
+  `cya` float DEFAULT NULL,
+  `trichlor_shock` float DEFAULT NULL,
+  `soda_ash` float DEFAULT NULL,
+  `sodium_bicarbonate` float DEFAULT NULL,
+  `tabs` int(11) DEFAULT NULL,
+  `granular_trichlor` float DEFAULT NULL,
+  `phosphate_remover` float DEFAULT NULL,
+  `muriatic_acid` float DEFAULT NULL,
+  `sodium_thiosulfate` float DEFAULT NULL,
+  `stabilizer` float DEFAULT NULL,
+  `green_to_clean` float DEFAULT NULL,
+  `de` float DEFAULT NULL,
+  `address_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`service_call_id`),
+  KEY `user_id` (`user_id`),
+  KEY `address_id` (`address_id`),
+  CONSTRAINT `service_calls_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
+  CONSTRAINT `service_calls_ibfk_2` FOREIGN KEY (`address_id`) REFERENCES `addresses` (`address_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-INSERT INTO service_calls 
-VALUES
-(
-'2020-01-27T00:00:00Z',
-'2020-01-27T00:30:00Z',
-8,
-3900,
-null,
-null,
-30,
-15,
-8.4,
-240,
-300,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-5
-);
+--
+-- Table structure for table `services`
+--
 
-INSERT INTO invoices
-(service_start, service_end, invoice_number, invoice_amount, payment_date, payment_type, payment_amount, user_id, service_address_id, invoice_url) 
-VALUES
-(
-'09/19/19',
-'12/13/19',
-1525,
-99.99,
-'01/05/20',
-'Zelle',
-99.99,
-8,
-5,
-'http://images.beachfamilypools.com/invoice-1525-graves.pdf'
-);
+DROP TABLE IF EXISTS `services`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `services` (
+  `service_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(70) NOT NULL,
+  `description` text,
+  PRIMARY KEY (`service_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-INSERT INTO photos
-(date_taken, category, photo_url, user_id, service_call_id) 
-VALUES
-(
-'11/14/19',
-null,
-'http://images.beachfamilypools.com/customer_pool1.jpg',
-8,
-1
-);
+--
+-- Table structure for table `services_to_service_calls`
+--
 
-SELECT sc.id, sc.start_time AS "startTime", sc.end_time AS "endTime", sc.user_id AS "userId", sc.salt, sc.phosphates, sc.tds, sc.filter_psi AS "filterPsi", sc.chlorine, sc.ph, sc.alkalinity, sc.cya, sc.trichlor_shock AS "trichlorShock", sc.soda_ash AS "sodaAsh", sc.sodium_bicarbonate AS "sodiumBicarbonate", sc.tabs, sc.granular_trichlor As "granularTrichlor", sc.phosphate_remover AS "phosphateRemover", sc.muriatic_acid AS "muriaticAcid", sc.sodium_thiosulfate AS "sodiumThiosulfate", sc.stabilizer, sc.green_to_clean AS "greenToClean", sc.de, sc.service_address_id AS "serviceAddressId", CONCAT(u.first_name, ' ', u.last_name) AS technician, c.customer_name AS customer, s.id, s.name
-FROM service_calls AS sc
-LEFT JOIN users AS u
-ON u.id = sc.user_id
-LEFT JOIN service_addresses AS sa
-ON sa.id = sc.service_address_id
-LEFT JOIN customers AS c
-ON c.id = sa.customer_id
-LEFT JOIN services_to_service_calls AS stsc
-ON stsc.service_call_id = sc.id
-LEFT JOIN services as s
-ON stsc.service_id = s.id;
+DROP TABLE IF EXISTS `services_to_service_calls`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `services_to_service_calls` (
+  `service_id` int(11) NOT NULL,
+  `service_call_id` int(11) NOT NULL,
+  PRIMARY KEY (`service_id`,`service_call_id`),
+  KEY `service_call_id` (`service_call_id`),
+  CONSTRAINT `services_to_service_calls_ibfk_1` FOREIGN KEY (`service_id`) REFERENCES `services` (`service_id`),
+  CONSTRAINT `services_to_service_calls_ibfk_2` FOREIGN KEY (`service_call_id`) REFERENCES `service_calls` (`service_call_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `travel_events`
+--
+
+DROP TABLE IF EXISTS `travel_events`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `travel_events` (
+  `travel_event_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `event_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `latitude` float NOT NULL,
+  `longitude` float NOT NULL,
+  `event_type` varchar(20) NOT NULL,
+  `address_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`travel_event_id`),
+  KEY `address_id` (`address_id`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `travel_events_ibfk_1` FOREIGN KEY (`address_id`) REFERENCES `addresses` (`address_id`),
+  CONSTRAINT `travel_events_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `users` (
+  `user_id` int(11) NOT NULL AUTO_INCREMENT,
+  `is_admin` tinyint(1) DEFAULT NULL,
+  `user_role` varchar(40) NOT NULL,
+  `first_name` varchar(40) NOT NULL,
+  `last_name` varchar(40) NOT NULL,
+  `phone_number` varchar(40) DEFAULT NULL,
+  `email_address` varchar(60) NOT NULL,
+  `hash` text,
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `vendors`
+--
+
+DROP TABLE IF EXISTS `vendors`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `vendors` (
+  `vendor_id` int(11) NOT NULL AUTO_INCREMENT,
+  `vendor_name` varchar(40) NOT NULL,
+  `phone_number` varchar(40) DEFAULT NULL,
+  `email_address` varchar(60) DEFAULT NULL,
+  PRIMARY KEY (`vendor_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2020-04-17 14:31:10
