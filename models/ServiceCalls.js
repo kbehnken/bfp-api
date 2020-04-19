@@ -7,7 +7,8 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       allowNull: false,
       unique: true,
-      field: 'service_call_id'
+      field: 'service_call_id',
+      autoIncrement: true
     },
     startTime: {
       type: DataTypes.DATE,
@@ -113,6 +114,7 @@ module.exports = (sequelize, DataTypes) => {
       field: 'updated_at'
     }
   }, { tableName: 'service_calls' });
-
+  // ServiceCall.hasMany(Service, {through: 'servicesToServiceCalls'});
+  
   return ServiceCall;
 };

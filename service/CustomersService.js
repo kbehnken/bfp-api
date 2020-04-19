@@ -6,8 +6,8 @@ let respondWithCode = require('../utils/writer').respondWithCode;
  **/
 exports.addCustomer = function(body) {
   return new Promise(async function(resolve, reject) {
-    const { customerName, phoneNumber, emailAddress } = body;
-    await db.add_customer([customerName, phoneNumber, emailAddress])
+    const newCustomer = Customer.build(body);
+    await newCustomer.save()
     .then(customer => {
       resolve(customer)
     })
@@ -24,6 +24,7 @@ exports.getCustomers = function() {
   return new Promise(async function(resolve, reject) {
     await Customer.findAll()
     .then(customers => {
+      console.log(customers)
       resolve(customers)
     })
     .catch(err => {
@@ -35,13 +36,22 @@ exports.getCustomers = function() {
 /**
  * Returns a single customer
  **/
-exports.getCustomerById = function(id) {
+exports.getCustomerById = function(customerId) {
   return new Promise(async function(resolve, reject) {
-    await db.get_customer_by_id(id)
+    await Customer.findAll({
+      where: {
+        customerId: customerId
+      },
+      include: [{
+        model: Address,
+        where: { customerId: 'customerId' }
+      }]
+    })
     .then(customer => {
        if (customer.length === 0){
         resolve(respondWithCode(404, "Customer not found"))
        }
+       console.log(customer);
        resolve(customer)
     })
     .catch(err => {

@@ -7,7 +7,8 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       allowNull: false,
       unique: true,
-      field: 'address_id'
+      field: 'address_id',
+      autoIncrement: true
     },
     streetAddress: {
       type: DataTypes.STRING,
@@ -44,6 +45,22 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.FLOAT,
       field: 'longitude'
     },
+    customerId: {
+      type: DataTypes.INTEGER,
+      field: 'customer_id',
+      references:{
+        model: Customer,
+        key: 'customer_id'
+      }
+    },
+    vendorId: {
+      type: DataTypes.INTEGER,
+      field: 'vendor_id',
+      references: {
+        model: Vendor,
+        key: 'vendor_id'
+      }
+    },
     createdAt: {
       type: DataTypes.DATE,
       field: 'created_at'
@@ -54,5 +71,6 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, { tableName: 'addresses' });
 
+ 
   return Address;
 };

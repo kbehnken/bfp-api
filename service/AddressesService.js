@@ -1,14 +1,28 @@
 'use strict';
 let respondWithCode = require('../utils/writer').respondWithCode;
 
-
+/**
+ * Adds a single address
+ **/
+exports.addAddress = function(body) {
+  return new Promise(async function(resolve, reject) {
+    const newAddress = Address.build(body);
+    await newAddress.save()
+    .then(address => {
+      resolve(address)
+    })
+    .catch(err => {
+      reject(respondWithCode(500, err));
+    });
+  });
+}
 /*
  * Returns a list of all service addresses - An array of objects
  **/
-/*
+
 exports.getAddresses = function() {
   return new Promise(async function(resolve, reject) {
-    await db.get_addresses()
+    await Address.findAll()
     .then(addresses => {
       resolve(addresses)
     })
@@ -17,16 +31,13 @@ exports.getAddresses = function() {
     });
   })
 }
-exports.getAddresses = function() {
-  return new Promise(async function(resolve, reject) {
-    await User.getOne(1)
-*/
+
 /**
  * Returns a single service address
 **/
-exports.getAddressById = function(id) {
+exports.getAddressById = function(addressId) {
   return new Promise(async function(resolve, reject) {
-    await db.get_address_by_id(id)
+    await Address.findByPk(addressId)
     .then(address => {
        if (address.length === 0){
         resolve(respondWithCode(404, "Service address not found"))

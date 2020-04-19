@@ -22,10 +22,24 @@ sequelize.authenticate()
     console.log("Could not connect to database", err);
 });
 
-global.Customer = sequelize.import('./models/customers.js');
-global.Address = sequelize.import('./models/address.js');
+global.User = sequelize.import('./models/Users.js');
+global.Customer = sequelize.import('./models/Customers.js');
+global.Vendor = sequelize.import('./models/Vendors.js');
+global.Address = sequelize.import('./models/Addresses.js');
+global.Asset = sequelize.import('./models/Assets.js');
+global.ServiceCall = sequelize.import('./models/ServiceCalls.js');
+global.Service = sequelize.import('./models/Services.js');
+global.TravelEvent = sequelize.import('./models/TravelEvents.js');
 
-sequelize.sync();
+Customer.hasMany(Address);
+Address.belongsTo(Customer);
+Address.belongsTo(Vendor);
+Asset.belongsToMany(Address, {through: 'assets_to_addresses'});
+ServiceCall.belongsTo(Address, {onDelete: 'RESTRICT'});
+ServiceCall.belongsTo(User, {onDelete: 'RESTRICT'});
+TravelEvent.belongsTo(Address, {onDelete: 'RESTRICT'});
+TravelEvent.belongsTo(User, {onDelete: 'RESTRICT'});
+
 // swaggerRouter configuration
 var options = {
     controllers: path.join(__dirname, './controllers')

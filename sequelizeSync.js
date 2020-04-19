@@ -13,6 +13,13 @@ sequelize.authenticate()
     console.log("Could not connect to database", err);
 });
 
-//const User = require('./models/user.js').User;
-Customer = sequelize.import('./models/customers.js');
+User = sequelize.import('./models/Users.js');
+Customer = sequelize.import('./models/Customers.js');
+Vendor = sequelize.import('./models/Vendors.js');
+Address = sequelize.import('./models/Addresses.js');
+Asset = sequelize.import('./models/Assets.js');
+ServiceCall = sequelize.import('./models/ServiceCalls.js');
+Service = sequelize.import('./models/Services.js');
+TravelEvent = sequelize.import('./models/TravelEvents.js');
+
 sequelize.sync({alter: true});
