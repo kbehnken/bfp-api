@@ -38,13 +38,9 @@ exports.getCustomers = function() {
  **/
 exports.getCustomerById = function(customerId) {
   return new Promise(async function(resolve, reject) {
-    await Customer.findAll({
-      where: {
-        customerId: customerId
-      },
+    await Customer.findByPk(1, {
       include: [{
-        model: Address,
-        where: { customerId: 'customerId' }
+        model: Address
       }]
     })
     .then(customer => {

@@ -34,7 +34,6 @@ module.exports = (sequelize, DataTypes) => {
       field: 'updated_at'
     }
   }, { tableName: 'customers' });
-
   
   return Customer;
 };

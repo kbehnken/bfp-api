@@ -13,6 +13,7 @@ const serverPort = 4000;
 
 const { DB, DB_USER, DB_PASSWORD } = process.env;
 global.sequelize = new Sequelize(DB, DB_USER, DB_PASSWORD, {
+  logging: console.log,
   dialect: 'mysql'
 });
 
@@ -21,24 +22,7 @@ sequelize.authenticate()
 .catch(err => {
     console.log("Could not connect to database", err);
 });
-
-global.User = sequelize.import('./models/Users.js');
-global.Customer = sequelize.import('./models/Customers.js');
-global.Vendor = sequelize.import('./models/Vendors.js');
-global.Address = sequelize.import('./models/Addresses.js');
-global.Asset = sequelize.import('./models/Assets.js');
-global.ServiceCall = sequelize.import('./models/ServiceCalls.js');
-global.Service = sequelize.import('./models/Services.js');
-global.TravelEvent = sequelize.import('./models/TravelEvents.js');
-
-Customer.hasMany(Address);
-Address.belongsTo(Customer);
-Address.belongsTo(Vendor);
-Asset.belongsToMany(Address, {through: 'assets_to_addresses'});
-ServiceCall.belongsTo(Address, {onDelete: 'RESTRICT'});
-ServiceCall.belongsTo(User, {onDelete: 'RESTRICT'});
-TravelEvent.belongsTo(Address, {onDelete: 'RESTRICT'});
-TravelEvent.belongsTo(User, {onDelete: 'RESTRICT'});
+require('./models/models.js');
 
 // swaggerRouter configuration
 var options = {

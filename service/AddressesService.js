@@ -36,8 +36,14 @@ exports.getAddresses = function() {
  * Returns a single service address
 **/
 exports.getAddressById = function(addressId) {
+  console.log(addressId)
   return new Promise(async function(resolve, reject) {
-    await Address.findByPk(addressId)
+    await Address.findByPk(addressId, {
+        include: [{
+            model: ServiceCall,
+            include: [ Service ]
+        }]
+    })
     .then(address => {
        if (address.length === 0){
         resolve(respondWithCode(404, "Service address not found"))
