@@ -101,10 +101,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.FLOAT,
       field: 'de'
     },
-    addressId: {
-      type: DataTypes.FLOAT,
-      field: 'address_id'
-    },
+//    addressId: {
+//      type: DataTypes.INTEGER,
+//      field: 'address_id'
+//    },
     createdAt: {
       type: DataTypes.DATE,
       field: 'created_at'
@@ -114,7 +114,6 @@ module.exports = (sequelize, DataTypes) => {
       field: 'updated_at'
     }
   }, { tableName: 'service_calls' });
-  // ServiceCall.hasMany(Service, {through: 'servicesToServiceCalls'});
   
   return ServiceCall;
 };

@@ -18,6 +18,5 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING
     }
   });
-  Service.belongsToMany(ServiceCall, {through: 'services_to_service_calls'});
   return Service;
 };
