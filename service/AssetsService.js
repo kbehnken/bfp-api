@@ -6,7 +6,7 @@ let respondWithCode = require('../utils/writer').respondWithCode;
  **/
 exports.getAssets = function() {
   return new Promise(async function(resolve, reject) {
-    await db.get_assets()
+    await Asset.findAll()
     .then(assets => {
       resolve(assets)
     })
@@ -21,7 +21,7 @@ exports.getAssets = function() {
  **/
 exports.getAssetById = function(id) {
   return new Promise(async function(resolve, reject) {
-    await db.get_asset_by_id(id)
+    await Asset.findByPk(id)
     .then(asset => {
        if (asset.length === 0){
         resolve(respondWithCode(404, "Asset not found"))

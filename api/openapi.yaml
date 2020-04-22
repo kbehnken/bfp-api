@@ -509,7 +509,7 @@ components:
         $ref: '#/components/schemas/ServiceCall'
     ServiceCall:
       required:
-      - serviceAddressId
+      - addressId
       - userId
       - startTime
       - endTime
@@ -557,7 +557,7 @@ components:
           type: number
         userid:
           type: integer
-        serviceAddressId:
+        addressId:
           type: integer
         technician:
           type: string
