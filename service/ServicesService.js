@@ -6,7 +6,7 @@ let respondWithCode = require('../utils/writer').respondWithCode;
  **/
 exports.getServices = function() {
   return new Promise(async function(resolve, reject) {
-    await db.get_services()
+    await Service.findAll()
     .then(services => {
       resolve(services)
     })
@@ -19,11 +19,11 @@ exports.getServices = function() {
 /**
  * Returns a single service
  **/
-exports.getServiceById = function(id) {
+exports.getServiceById = function(serviceId) {
   return new Promise(async function(resolve, reject) {
-    await db.get_service_by_id(id)
+    await Service.findByPk(serviceId)
     .then(service => {
-       if (service.length === 0){
+       if(!service) {
         resolve(respondWithCode(404, "Service not found"))
        }
        resolve(service)
