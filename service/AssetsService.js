@@ -19,11 +19,11 @@ exports.getAssets = function() {
 /**
  * Returns a single asset
  **/
-exports.getAssetById = function(id) {
+exports.getAssetById = function(assetId) {
   return new Promise(async function(resolve, reject) {
-    await Asset.findByPk(id)
+    await Asset.findByPk(assetId)
     .then(asset => {
-       if (asset.length === 0){
+       if(!asset) {
         resolve(respondWithCode(404, "Asset not found"))
        }
        resolve(asset)
