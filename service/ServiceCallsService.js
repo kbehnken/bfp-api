@@ -1,18 +1,14 @@
 'use strict';
-let { addServiceToServiceCall, removeAllServicesFromServiceCall } = require('./ServicesToServiceCallsService')
+
 let respondWithCode = require('../utils/writer').respondWithCode;
 
 /**
  * Adds a single service call/work order
- *
- * body ServiceCall JSON object with service call information
- * returns ServiceCalls
- **/
+**/
 exports.addServiceCall = function(body) {
   return new Promise(async function(resolve, reject) {
     let newServiceCall = ServiceCall.build(body);
-    let services = body.services || []
-    console.log(newServiceCall)
+    let services = body.services || [];
 
     // Create the new service call and persist to DB
     newServiceCall = await newServiceCall.save()
@@ -24,24 +20,23 @@ exports.addServiceCall = function(body) {
     });
 
     // Add a service association for every id in services
-    for (let i=0; i<services.length; i++){
-        await newServiceCall.addService(services[i])
-        .then()
-        .catch(err => {
-            reject(respondWithCode(500, err));
-        });
+    for(let i = 0; i < services.length; i++) {
+      await newServiceCall.addService(services[i])
+      .then()
+      .catch(err => {
+        reject(respondWithCode(500, err));
+      });
     }
 
     // Update the serviceCall with the services data and resolve
     resolve(newServiceCall.reload({
-        include: [Service]
+      include: [ Service ]
     }))
   });
 }
 
 exports.updateServiceCall = function(body, serviceCallId) {
   return new Promise(async function(resolve, reject) {
-    console.log(body)
 
     // Fetch the service call we are updating
     let serviceCall = await ServiceCall.findByPk(serviceCallId) 
@@ -61,31 +56,8 @@ exports.updateServiceCall = function(body, serviceCallId) {
 }
 
 /**
- * Returns a single service call/work order
- *
- * id Integer Id of service call/work order to return
- * returns ServiceCall
- **/
-exports.getServiceCallById = function(serviceCallId) {
-  return new Promise(async function(resolve, reject) {
-    await ServiceCall.findByPk(serviceCallId, {
-        include: [ Service ]
-    })
-    .then(serviceCall => {
-        resolve(serviceCall);    
-    })
-    .catch(err => {
-      reject(respondWithCode(500, err));
-    });
-  });
-}
-
-
-/**
- * Returns a list of all service calls/work orders
- *
- * returns ServiceCall
- **/
+  * Returns a list of all service calls/work orders
+**/
 exports.getServiceCalls = function() {
   return new Promise(async function(resolve, reject) {
     await ServiceCall.findAll()
@@ -99,16 +71,33 @@ exports.getServiceCalls = function() {
 }
 
 /**
- * Adds a service to a service call
- *
- * id Integer id of service to add
- * returns ServiceCall
- */
+  * Returns a single service call/work order
+**/
+exports.getServiceCallById = function(serviceCallId) {
+  return new Promise(async function(resolve, reject) {
+    await ServiceCall.findByPk(serviceCallId, {
+      include: [ Service ]
+    })
+    .then(serviceCall => {
+      if(!serviceCall) {
+        reject(respondWithCode(404, "Service Call not found"))
+      }
+      resolve(serviceCall);    
+    })
+    .catch(err => {
+      reject(respondWithCode(500, err));
+    });
+  });
+}
+
+/**
+ * Adds a single service to a service call
+**/
 exports.addServiceToServiceCall = function(serviceCallId, serviceId) {
   return new Promise(async function(resolve, reject) {
     
     // Fetch the service call
-    let serviceCall = await ServiceCall.findByPk(serviceCallId)
+    await ServiceCall.findByPk(serviceCallId)
     .then(serviceCall => serviceCall)
     .catch(err => {
         reject(respondWithCode(500, err));
@@ -117,9 +106,9 @@ exports.addServiceToServiceCall = function(serviceCallId, serviceId) {
     // Add the service
     await ServiceCall.addService(serviceId)
     .then(serviceCall => {
-        resolve(serviceCall.reload({
-            include: [Service]
-        }))
+      resolve(serviceCall.reload({
+          include: [ Service ]
+      }))
     })
     .catch(err => {
         reject(respondWithCode(500, err));
@@ -128,22 +117,19 @@ exports.addServiceToServiceCall = function(serviceCallId, serviceId) {
 }
 
 /**
- * Remove a service from a service call
- * 
- * id Integer id of service to remove
- * returns ServiceCall
- */
+ * Removes a service from a service call
+**/
 exports.removeServiceFromServiceCall = function(serviceCallId, serviceId) {
   return new Promise(async function(resolve, reject) {
     await ServicesToServiceCalls.destroy({
-        where: {
-            serviceCallId: serviceCallId,
-            serviceId: serviceId
-        }
+      where: {
+          serviceCallId: serviceCallId,
+          serviceId: serviceId
+      }
     })
     .then(resolve(await ServiceCall.findByPk(serviceCallId)))
     .catch(err => {
-        reject(respondWithCode(500, err))
+        reject(respondWithCode(500, err));
     });
   });
 }
