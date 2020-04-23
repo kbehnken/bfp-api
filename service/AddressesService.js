@@ -73,7 +73,7 @@ exports.getAddressById = function(addressId) {
 /**
  * Adds a single asset to an address
 **/
-exports.addServiceToServiceCall = function(serviceCallId, serviceId) {
+exports.addAssetToAddress = function(addressId, assetId) {
   return new Promise(async function(resolve, reject) {
     
     // Fetch the address
