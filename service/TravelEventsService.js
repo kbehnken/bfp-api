@@ -1,15 +1,18 @@
 'use strict';
+
 let respondWithCode = require('../utils/writer').respondWithCode;
 
 /**
  * Adds a single travel event
- **/
+**/
 exports.addTravelEvent = function(body) {
   return new Promise(async function(resolve, reject) {
-    const { eventTime, latitude, longitude, eventType, serviceAddressId, userId } = body;
-    await db.add_travel_event([eventTime, latitude, longitude, eventType, serviceAddressId, userId])
-    .then(travelEvent => {
-      resolve(travelEvent)
+    let newTravelEvent = TravelEvent.build(body);
+
+    // Create the new travel event and persist to DB
+    newTravelEvent = await newTravelEvent.save()
+    .then(newTravelEvent => {
+      return(newTravelEvent)
     })
     .catch(err => {
       reject(respondWithCode(500, err));
@@ -18,11 +21,11 @@ exports.addTravelEvent = function(body) {
 }
 
 /*
- * Returns a list of all service addresses - An array of objects
- **/
+ * Returns a list of all travel events - An array of objects
+**/
 exports.getTravelEvents = function() {
   return new Promise(async function(resolve, reject) {
-    await db.get_travel_events()
+    await TravelEvent.findAll()
     .then(travelEvents => {
       resolve(travelEvents)
     })
