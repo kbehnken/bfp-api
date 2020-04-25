@@ -14,35 +14,24 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       field: 'is_admin'
     },
-    userRole: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      field: 'user_role'
-    },
-    firstName: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      field: 'first_name'
-    },
-    lastName: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      field: 'last_name'
-    },
-    phoneNumber: {
-      type: DataTypes.STRING,
-      field: 'phone_number'
-    },
-    emailAddress: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      field: 'email_address'
-    },
     hash: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    accountId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'account_id'
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      field: 'created_at'
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      field: 'updated_at'
     }
-  });
+  }, { tableName: 'users' });
 
   return User;
 };
