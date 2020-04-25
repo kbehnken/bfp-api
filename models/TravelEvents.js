@@ -17,11 +17,13 @@ module.exports = (sequelize, DataTypes) => {
     },
     latitude: {
       type: DataTypes.FLOAT,
-      allowNull: false
+      allowNull: false,
+      field: 'latitude'
     },
     longitude: {
       type: DataTypes.FLOAT,
-      allowNull: false
+      allowNull: false,
+      field: 'longitude'
     },
     eventType: {
       type: DataTypes.STRING,
