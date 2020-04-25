@@ -20,8 +20,8 @@ exports.addAddress = function(body) {
     });
     
     // Add an asset association for every id in assets
-    for(let i = 0; i < addresses.length; i++) {
-      await newAddress.addAddress(addresses[i])
+    for(let i = 0; i < assets.length; i++) {
+      await newAddress.addAddress(assets[i])
       .then()
       .catch(err => {
         reject(respondWithCode(500, err));
