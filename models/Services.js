@@ -12,11 +12,22 @@ module.exports = (sequelize, DataTypes) => {
     },
     name: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      field: 'name'
     },
     description: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      field: 'description'
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      field: 'created_at'
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      field: 'updated_at'
     }
-  });
+  }, { tableName: 'services' });
+
   return Service;
 };
