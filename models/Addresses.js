@@ -45,15 +45,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.FLOAT,
       field: 'longitude'
     },
-/*    customerId: {
+    accountId: {
       type: DataTypes.INTEGER,
-      field: 'customer_id',
+      field: 'account_id',
     },
-    vendorId: {
-      type: DataTypes.INTEGER,
-      field: 'vendor_id',
-    },
-*/
     createdAt: {
       type: DataTypes.DATE,
       field: 'created_at'
