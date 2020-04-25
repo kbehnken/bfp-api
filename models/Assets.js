@@ -24,8 +24,16 @@ module.exports = (sequelize, DataTypes) => {
     },
     note: {
       type: DataTypes.STRING
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      field: 'created_at'
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      field: 'updated_at'
     }
-  });
+  }, { tableName: 'assets' });
   
   return Asset;
 };
