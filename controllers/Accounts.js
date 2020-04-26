@@ -1,10 +1,10 @@
 'use strict';
 
 var utils = require('../utils/writer.js');
-var Customers = require('../service/CustomersService');
+var Accounts = require('../service/AccountsService');
 
-module.exports.addCustomer = function addCustomer (req, res, next, body) {
-  Customers.addCustomer(body)
+module.exports.addAccount = function addAccount (req, res, next, body) {
+  Accounts.addAccount(body)
     .then(function (response) {
       utils.writeJson(res, response);
     })
@@ -13,8 +13,8 @@ module.exports.addCustomer = function addCustomer (req, res, next, body) {
     });
 };
 
-module.exports.getCustomerById = function getCustomerById (req, res, next, id) {
-  Customers.getCustomerById(id)
+module.exports.getAccountById = function getAccountById (req, res, next, id) {
+  Accounts.getAccountById(id)
     .then(function (response) {
       utils.writeJson(res, response);
     })
@@ -23,8 +23,8 @@ module.exports.getCustomerById = function getCustomerById (req, res, next, id) {
     });
 };
 
-module.exports.getCustomers = function getCustomers (req, res, next) {
-  Customers.getCustomers()
+module.exports.getAccounts = function getAccounts (req, res, next) {
+  Accounts.getAccounts()
     .then(function (response) {
       utils.writeJson(res, response);
     })
@@ -33,8 +33,8 @@ module.exports.getCustomers = function getCustomers (req, res, next) {
     });
 };
 
-module.exports.updateCustomer = function updateCustomer (req, res, next, body, id) {
-  Customers.updateCustomer(body, id)
+module.exports.updateAccount = function updateAccount (req, res, next, body, id) {
+  Accounts.updateAccount(body, id)
     .then(function (response) {
       utils.writeJson(res, response);
     })
