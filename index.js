@@ -6,14 +6,14 @@ let {DataTypes} = require('sequelize');
 
 const path = require('path');
 const http = require('http');
-const massive = require('massive');
+// const massive = require('massive');
 
 const oas3Tools = require('oas3-tools');
 const serverPort = 4000;
 
 const { DB, DB_USER, DB_PASSWORD } = process.env;
 global.sequelize = new Sequelize(DB, DB_USER, DB_PASSWORD, {
-  logging: console.log,
+//   logging: console.log,
   dialect: 'mysql'
 });
 
