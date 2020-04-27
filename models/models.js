@@ -16,7 +16,7 @@ Account.hasMany(Address, {
 });
 Address.belongsTo(Account, {
     foreignKey: {
-        name: 'AccountId',
+        name: 'accountId',
         field: 'account_id'
     }
 });
