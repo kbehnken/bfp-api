@@ -18,12 +18,12 @@ module.exports = (sequelize, DataTypes) => {
     firstName: {
       type: DataTypes.STRING,
       allowNull: false,
-      field: 'firstName'
+      field: 'first_name'
     },
     lastName: {
       type: DataTypes.STRING,
       allowNull: false,
-      field: 'lastName'
+      field: 'last_name'
     },
     phoneNumber: {
       type: DataTypes.STRING,

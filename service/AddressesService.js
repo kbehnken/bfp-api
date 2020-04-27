@@ -45,7 +45,7 @@ exports.getAddresses = function() {
       resolve(addresses)
     })
     .catch(err => {
-      reject(utils.respondWithCode(500, err));
+      reject(respondWithCode(500, err));
     });
   })
 }

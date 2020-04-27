@@ -1,7 +1,6 @@
 // Define models
 global.User = sequelize.import('./Users.js');
-global.Customer = sequelize.import('./Customers.js');
-global.Vendor = sequelize.import('./Vendors.js');
+global.Account = sequelize.import('./Accounts.js');
 global.Address = sequelize.import('./Addresses.js');
 global.Asset = sequelize.import('./Assets.js');
 global.ServiceCall = sequelize.import('./ServiceCalls.js');
@@ -9,22 +8,16 @@ global.Service = sequelize.import('./Services.js');
 global.TravelEvent = sequelize.import('./TravelEvents.js');
 
 // Define associations
-Customer.hasMany(Address, {
+Account.hasMany(Address, {
     foreignKey: {
-        name: 'customerId',
-        field: 'customer_id'
+        name: 'accountId',
+        field: 'account_id'
     }
 });
-Address.belongsTo(Customer, {
+Address.belongsTo(Account, {
     foreignKey: {
-        name: 'customerId',
-        field: 'customer_id'
-    }
-});
-Address.belongsTo(Vendor, {
-    foreignKey: {
-        name: 'vendor_id',
-        field: 'vendor_id'
+        name: 'AccountId',
+        field: 'account_id'
     }
 });
 Asset.belongsToMany(Address, {

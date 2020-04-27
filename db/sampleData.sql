@@ -1,16 +1,17 @@
 use bfp_api;
-insert into users set user_role='Technician', first_name='Jeremy', last_name='Saffell', email_address='jeremy@beachfamilypools.com', hash='12345';
+insert into users set   hash='12345';
 
-insert into customers set customer_name='Tim Behnken', phone_number='480-580-7412', email_address='tbehnken@gmail.com';
-insert into customers set customer_name='Katrina Behnken', phone_number='480-319-2011', email_address='katringa.behnken@gmail.com';
-insert into customers set customer_name='Diane Graves', phone_number='520-123-4567', email_address='dgraves@gmail.com';
-insert into customers set customer_name='Tim Stoner', phone_number='520-987-6543', email_address='tstoner@gmail.com';
+insert into accounts set first_name='Tim', last_name='Behnken', phone_number='480-580-7412', email_address='tbehnken@gmail.com';
+insert into accounts set first_name='Katrina', last_name='Behnken', phone_number='480-319-2011', email_address='katringa.behnken@gmail.com';
+insert into accounts set first_name='Diane', last_name='Graves', phone_number='520-123-4567', email_address='dgraves@gmail.com';
+insert into accounts set first_name='Tim', last_name='Stoner', phone_number='520-987-6543', email_address='tstoner@gmail.com';
+insert into accounts set first_name='Jeremy', last_name='Saffell', phone_number='520-987-6543', email_address='tstoner@gmail.com';
 
-insert into addresses set street_address='19152 E Kingbird Drive', city='Queen Creek', state='AZ', postal_code='85142', customer_id=1;
-insert into addresses set street_address='19153 E Swan Drive', city='Queen Creek', state='AZ', postal_code='85142', customer_id=2;
-insert into addresses set street_address='12345 N Campbell Drive', city='Tucson', state='AZ', postal_code='85741', customer_id=3;
-insert into addresses set street_address='54321 E Speedway Blv', city='Tucson', state='AZ', postal_code='85741', customer_id=4;
-insert into addresses set street_address='14543 S Kolb', city='Tucson', state='AZ', postal_code='854742', customer_id=4;
+insert into addresses set street_address='19152 E Kingbird Drive', city='Queen Creek', state='AZ', postal_code='85142', account_id=1;
+insert into addresses set street_address='19153 E Swan Drive', city='Queen Creek', state='AZ', postal_code='85142', account_id=2;
+insert into addresses set street_address='12345 N Campbell Drive', city='Tucson', state='AZ', postal_code='85741', account_id=3;
+insert into addresses set street_address='54321 E Speedway Blv', city='Tucson', state='AZ', postal_code='85741', account_id=4;
+insert into addresses set street_address='14543 S Kolb', city='Tucson', state='AZ', postal_code='854742', account_id=4;
 
 insert into assets set make='Craftsman', model="DF3240", category='Filter Pump';
 insert into assets set make='Harbor Freight', model='PT345', category='Filter Pump';

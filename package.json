@@ -24,7 +24,16 @@
     "mysql": "^2.18.1",
     "mysql2": "^2.1.0",
     "oas3-tools": "^2.0.2",
-    "sequelize": "^5.21.6",
+    "sequelize": "^5.21.7",
     "sequelize-auto": "^0.4.29"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "mocha": "^7.1.2"
+  },
+  "scripts": {
+    "test": "mocha --exit",
+    "start": "node index.js"
   }
 }
