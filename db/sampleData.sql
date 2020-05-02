@@ -54,7 +54,7 @@ stabilizer=34,
 green_to_clean=.3,
 de=1.1,
 address_id=3;
-insert into service_calls
+insert into service_calls set
 start_time='2020-04-01 00:06:00', 
 end_time='2020-04-01 00:07:00',          
 user_id=1,
