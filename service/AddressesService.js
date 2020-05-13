@@ -56,7 +56,12 @@ exports.getAddresses = function() {
 exports.getAddressById = function(addressId) {
   return new Promise(async function(resolve, reject) {
     await Address.findByPk(addressId, {
-      include: [ Asset ]
+      include: [{
+        model: Asset,
+        through: {
+          attributes: []
+        }
+      }]
     })
     .then(address => {
        if(!address) {
