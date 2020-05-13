@@ -1,0 +1,36 @@
+{
+    "title": "Account",
+    "type": "object",
+    "required": ["firstName", "lastName", "type"],
+    "properties": {
+        "id": {
+            "type": "integer",
+            "description": "Account ID"
+        },
+        "company": {
+            "type": "string",
+            "description": "Company Name"
+        },
+        "firstName": {
+            "type": "string",
+            "description": "First Name"
+        },
+        "lastName": {
+            "type": "string",
+            "description": "Last Name"
+        },
+        "phoneNumber": {
+            "type": "string",
+            "description": "Phone Number"
+        },
+        "emailAddress": {
+            "type": "string",
+            "description": "Email Address"
+        },
+        "type": {
+            "type": "string",
+            "enum": ["customer", "vendor", "employee"],
+            "description": "Type of account"
+        }
+    }
+}
