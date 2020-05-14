@@ -1,5 +1,7 @@
 {
+    "title": "Asset",
     "type": "object",
+    "additionalProperties": false,
     "properties": {
         "assetId": {
             "type": "integer",
