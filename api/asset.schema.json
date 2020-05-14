@@ -1,0 +1,54 @@
+{
+    "type": "object",
+    "properties": {
+        "assetId": {
+            "type": "integer",
+            "format": "int32"
+        },
+        "make": {
+            "type": "string",
+            "maxLength": 255
+        },
+        "model": {
+            "type": "string",
+            "maxLength": 255
+        },
+        "category": {
+            "type": "string",
+            "maxLength": 255
+        },
+        "note": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "maxLength": 255
+        },
+        "createdAt": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "format": "date-time"
+        },
+        "updatedAt": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "format": "date-time"
+        },
+        "addresses": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/address"
+            }
+        }
+    },
+    "required": [
+        "assetId",
+        "make",
+        "model",
+        "category"
+    ]
+}
