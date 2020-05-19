@@ -3,7 +3,6 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const endpoint = 'http://localhost:4000/api/v1';
 const { expect } = chai;
-const should = chai.should();
 
 chai.use(chaiHttp);
 
