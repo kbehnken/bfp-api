@@ -14,8 +14,6 @@ describe('get all service calls', () => {
         .end((err, res) => {
             expect(err).to.be.null;
             expect(res).to.have.status(200);
-            res.body.should.be.an('array');
-            res.body[0].should.have.property('startTime');
             done();
         });
     });
