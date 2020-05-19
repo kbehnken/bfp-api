@@ -399,8 +399,10 @@ components:
           - vendor
         createdAt:
           type: string
+          nullable: true
         updatedAt:
           type: string
+          nullable: true
       example:
         company: null
         firstName: Sally
