@@ -8,6 +8,8 @@ const yaml = require('js-yaml');
 const fs = require('fs');
 
 chai.use(chaiHttp);
+apiSpec = yaml.safeLoad(fs.readFileSync('./api/openapi.yaml'));
+chai.use(chaiResponseValidator(apiSpec));
 
 describe('get all service calls', () => {
     it('returns a list of all service calls', done => {

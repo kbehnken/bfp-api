@@ -8,6 +8,8 @@ const yaml = require('js-yaml');
 const fs = require('fs');
 
 chai.use(chaiHttp);
+apiSpec = yaml.safeLoad(fs.readFileSync('./api/openapi.yaml'));
+chai.use(chaiResponseValidator(apiSpec));
 
 describe('get all addresses', () => {
     it('returns a list of all addresses', done => {
