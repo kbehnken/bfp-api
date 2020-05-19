@@ -19,6 +19,8 @@ describe('get all addresses', () => {
         .end((err, res) => {
             expect(err).to.be.null
             expect(res).to.have.status(200);
+            expect(res.body).to.be.an('array');
+            expect(res).to.satisfyApiSpec;
             done();
         });
     });
