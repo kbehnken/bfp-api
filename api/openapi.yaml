@@ -503,6 +503,12 @@ components:
           type: string
         description:
           type: string
+        createdAt:
+          type: string
+          nullable: true
+        updatedAt:
+          type: string
+          nullable: true
       example:
         name: name
         description: description
