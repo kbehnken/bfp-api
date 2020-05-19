@@ -470,7 +470,8 @@ components:
         $ref: '#/components/schemas/Asset'
     Asset:
       required:
-      - name
+      - make
+      - category
       type: object
       properties:
         assetId:
