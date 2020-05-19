@@ -19,7 +19,6 @@ describe('get all assets', () => {
         .end((err, res) => {
             expect(err).to.be.null;
             expect(res).to.have.status(200);
-            res.body[0].should.be.an('object');
             expect(res.body[0].assetId).to.be.a('number');
             expect(res.body[0].make).to.be.string;
             expect(res.body).to.be.an('array');
