@@ -22,6 +22,7 @@ describe('get all assets', () => {
             expect(res.body[0].assetId).to.be.a('number');
             expect(res.body[0].make).to.be.string;
             expect(res.body).to.be.an('array');
+            expect(res.body[0]).to.be.an('object');
             expect(res).to.satisfyApiSpec;
             done();
         });
