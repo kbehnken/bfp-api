@@ -377,6 +377,7 @@ components:
       - lastName
       - type
       type: object
+      additionalProperties: false
       properties:
         id:
           type: integer
@@ -396,6 +397,10 @@ components:
           - employee
           - customer
           - vendor
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
       example:
         company: null
         firstName: Sally
