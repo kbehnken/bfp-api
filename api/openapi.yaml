@@ -447,6 +447,12 @@ components:
             type: integer
         accountId:
           type: integer
+        createdAt:
+          type: string
+          nullable: true
+        updatedAt:
+          type: string
+          nullable: true
       example:
         streetAddress: streetAddress
         city: city
