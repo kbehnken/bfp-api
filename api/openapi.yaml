@@ -52,7 +52,7 @@ paths:
       summary: Returns a single account
       operationId: getAccountById
       parameters:
-      - name: id
+      - name: accountId
         in: path
         description: Id of account to return
         required: true
@@ -74,7 +74,7 @@ paths:
       summary: Updates an existing account
       operationId: updateAccount
       parameters:
-      - name: id
+      - name: accountId
         in: path
         description: Id of account to update
         required: true
@@ -128,7 +128,7 @@ paths:
       summary: Returns a single address
       operationId: getAddressById
       parameters:
-      - name: id
+      - name: addressId
         in: path
         description: Id of service address to return
         required: true
@@ -150,7 +150,7 @@ paths:
       summary: Updates an existing service address
       operationId: updateAddress
       parameters:
-      - name: id
+      - name: addressId
         in: path
         description: Id of service address to update
         required: true
@@ -189,7 +189,7 @@ paths:
       summary: Returns a single asset
       operationId: getAssetById
       parameters:
-      - name: id
+      - name: assetId
         in: path
         description: Id of asset to return
         required: true
@@ -224,7 +224,7 @@ paths:
       summary: Returns a single service
       operationId: getServiceById
       parameters:
-      - name: id
+      - name: serviceId
         in: path
         description: Id of service to return
         required: true
@@ -274,7 +274,7 @@ paths:
       summary: Returns a single service call/work order
       operationId: getServiceCallById
       parameters:
-      - name: id
+      - name: serviceCallId
         in: path
         description: Id of service call/work order to return
         required: true
@@ -296,7 +296,7 @@ paths:
         summary: Updates an existing service call
         operationId: updateServiceCall
         parameters:
-        - name: id
+        - name: serviceCallId
           in: path
           description: Id of service call to update
           required: true
@@ -355,7 +355,7 @@ components:
       - accountId
       type: object
       properties:
-        id:
+        userId:
           type: integer
         isAdmin:
           type: boolean
@@ -379,7 +379,7 @@ components:
       type: object
       additionalProperties: false
       properties:
-        id:
+        accountId:
           type: integer
         company:
           type: string
@@ -421,7 +421,7 @@ components:
       - accountId
       type: object
       properties:
-        id:
+        addressId:
           type: string
         streetAddress:
           type: string
@@ -465,7 +465,7 @@ components:
       - name
       type: object
       properties:
-        id:
+        assetId:
           type: integer
         make:
           type: string
@@ -489,7 +489,7 @@ components:
       - name
       type: object
       properties:
-        id:
+        serviceId:
           type: integer
         name:
           type: string
@@ -510,7 +510,7 @@ components:
       - endTime
       type: object
       properties:
-        id:
+        serviceCallId:
           type: integer
         salt:
           type: number
@@ -604,7 +604,7 @@ components:
       - userId
       type: object
       properties:
-        id:
+        travelEventId:
           type: integer
         eventTime:
           type: string
