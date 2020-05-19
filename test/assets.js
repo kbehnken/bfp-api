@@ -12,11 +12,9 @@ describe('get all assets', () => {
         .request(endpoint)
         .get('/assets')
         .end((err, res) => {
-            expect(err).to.be.null
+            expect(err).to.be.null;
             expect(res).to.have.status(200);
-            res.body.should.be.an('array');
             res.body[0].should.be.an('object');
-            res.body[0].should.have.property('assetId');
             expect(res.body[0].assetId).to.be.a('number');
             res.body[0].should.have.property('make');
             expect(res.body[0].make).to.be.string;
