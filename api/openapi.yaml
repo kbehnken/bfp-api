@@ -483,6 +483,12 @@ components:
           type: string
         notes:
           type: string
+        createdAt:
+          type: string
+          nullable: true
+        updatedAt:
+          type: string
+          nullable: true
       example:
         make: make
         model: model
