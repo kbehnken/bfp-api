@@ -422,6 +422,7 @@ components:
       - postalCode
       - accountId
       type: object
+      additionalProperties: false
       properties:
         addressId:
           type: string
@@ -473,6 +474,7 @@ components:
       - make
       - category
       type: object
+      additionalProperties: false
       properties:
         assetId:
           type: integer
@@ -503,6 +505,7 @@ components:
       required:
       - name
       type: object
+      additionalProperties: false
       properties:
         serviceId:
           type: integer
@@ -530,6 +533,7 @@ components:
       - startTime
       - endTime
       type: object
+      additionalProperties: false
       properties:
         serviceCallId:
           type: integer
@@ -624,6 +628,7 @@ components:
       - addressId
       - userId
       type: object
+      additionalProperties: false
       properties:
         travelEventId:
           type: integer
