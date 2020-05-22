@@ -2,6 +2,21 @@
 let respondWithCode = require('../utils/writer').respondWithCode;
 
 /**
+  * Returns a list of all services to service calls mappings - An array of objects
+**/
+exports.getServicesToServiceCalls = function() {
+  return new Promise(async function(resolve, reject) {
+    await ServicesToServiceCalls.findAll()
+    .then(servicesToServiceCalls => {
+      resolve(servicesToServiceCalls)
+    })
+    .catch(err => {
+      reject(respondWithCode(500, err));
+    });
+  })
+}
+
+/**
  * Adds a single service to a service call/work order
  **/
 exports.addServiceToServiceCall = function(body) {
