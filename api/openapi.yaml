@@ -425,7 +425,7 @@ components:
       additionalProperties: false
       properties:
         addressId:
-          type: string
+          type: integer
         streetAddress:
           type: string
         city:
