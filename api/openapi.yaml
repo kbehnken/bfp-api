@@ -589,6 +589,12 @@ components:
           type: array
           items:
             type: integer
+        createdAt:
+          type: string
+          nullable: true
+        updatedAt:
+          type: string
+          nullable: true
       example:
         salt: 3900.0
         phosphates: null
