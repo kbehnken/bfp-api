@@ -651,6 +651,12 @@ components:
           type: integer
         userId:
           type: integer
+        createdAt:
+          type: string
+          nullable: true
+        updatedAt:
+          type: string
+          nullable: true
       example:
         eventTime: 2018-01-21T00:00:00Z
         latitude: latitude
