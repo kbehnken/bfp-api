@@ -20,7 +20,6 @@ describe('get all travel events', () => {
             expect(err).to.be.null;
             expect(res).to.have.status(200);
             res.body.should.be.an('array');
-            res.body[0].should.have.property('eventTime');
             done();
         });
     });
