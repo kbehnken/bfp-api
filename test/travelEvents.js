@@ -19,7 +19,6 @@ describe('get all travel events', () => {
         .end((err, res) => {
             expect(err).to.be.null;
             expect(res).to.have.status(200);
-            res.body.should.be.an('array');
             done();
         });
     });
