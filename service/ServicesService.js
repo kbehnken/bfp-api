@@ -2,6 +2,22 @@
 let respondWithCode = require('../utils/writer').respondWithCode;
 
 /**
+ * Adds a single service
+ **/
+exports.addService = function(body) {
+  return new Promise(async function(resolve, reject) {
+    let newService = Service.build(body);
+    await newService.save()
+    .then(service => {
+      resolve(service)
+    })
+    .catch(err => {
+      reject(respondWithCode(500, err));
+    });
+  });
+}
+
+/**
  * Returns a list of all services - An array of objects
  **/
 exports.getServices = function() {
