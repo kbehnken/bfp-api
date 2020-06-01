@@ -232,6 +232,21 @@ paths:
         "500":
           description: Internal server error
       x-swagger-router-controller: Services
+    post:
+      tags:
+      - services
+      summary: Adds a single service
+      operationId: addService
+      requestBody:
+        $ref: '#/components/requestBodies/Service'
+      responses:
+        "200":
+          $ref: '#/components/responses/Service200'
+        "400":
+          description: Validation error
+        "500":
+          description: Internal server error
+      x-swagger-router-controller: Services
   /services/{id}:
     get:
       tags:
