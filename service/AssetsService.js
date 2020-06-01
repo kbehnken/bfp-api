@@ -2,6 +2,22 @@
 let respondWithCode = require('../utils/writer').respondWithCode;
 
 /**
+ * Adds a single asset
+ **/
+exports.addAsset = function(body) {
+  return new Promise(async function(resolve, reject) {
+    let newAsset = Asset.build(body);
+    await newAsset.save()
+    .then(asset => {
+      resolve(asset)
+    })
+    .catch(err => {
+      reject(respondWithCode(500, err));
+    });
+  });
+}
+
+/**
  * Returns a list of all assets - An array of objects
  **/
 exports.getAssets = function() {
