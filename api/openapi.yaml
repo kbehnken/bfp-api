@@ -59,7 +59,7 @@ paths:
         "500":
           description: Internal server error          
       x-swagger-router-controller: Accounts
-  /accounts/{id}:
+  /accounts/{accountId}:
     get:
       tags:
       - accounts
@@ -135,7 +135,7 @@ paths:
         "500":
           description: Internal server error
       x-swagger-router-controller: Addresses
-  /addresses/{id}:
+  /addresses/{addressId}:
     get:
       tags:
       - addresses
@@ -211,7 +211,7 @@ paths:
         "500":
           description: Internal server error
       x-swagger-router-controller: Assets
-  /assets/{id}:
+  /assets/{assetId}:
     get:
       tags:
       - assets
@@ -261,7 +261,7 @@ paths:
         "500":
           description: Internal server error
       x-swagger-router-controller: Services
-  /services/{id}:
+  /services/{serviceId}:
     get:
       tags:
       - services
@@ -311,7 +311,7 @@ paths:
         "500":
           description: Internal server error
       x-swagger-router-controller: ServiceCalls
-  /serviceCalls/{id}:
+  /serviceCalls/{serviceCallId}:
     get:
       tags:
       - service calls
