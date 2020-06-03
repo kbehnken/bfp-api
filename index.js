@@ -10,6 +10,8 @@ const http = require('http');
 const oas3Tools = require('oas3-tools');
 const serverPort = 4000;
 
+const { ACCESS_TOKEN_SECRET } = process.env;
+global.accessTokenSecret = ACCESS_TOKEN_SECRET;
 const { DB, DB_USER, DB_PASSWORD } = process.env;
 global.sequelize = new Sequelize(DB, DB_USER, DB_PASSWORD, {
 //   logging: console.log,
