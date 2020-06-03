@@ -6,9 +6,6 @@ let {DataTypes} = require('sequelize');
 
 const path = require('path');
 const http = require('http');
-const jwt = require('jsonwebtoken');
-const bodyParser = require('body-parser');
-// const massive = require('massive');
 
 const oas3Tools = require('oas3-tools');
 const serverPort = 4000;
