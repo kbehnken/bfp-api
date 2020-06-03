@@ -6,6 +6,20 @@ info:
 servers:
 - url: http://api.beachfamilypools.com:4000/api/v1
 paths:
+  /login:
+    get:
+      tags:
+      - authentication
+      summary: Authenticates user
+      operationId: login
+      responses:
+        "200":
+          $ref: '#/components/responses/Login200'
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error          
+      x-swagger-router-controller: Auth
   /users:
     get:
       tags:
@@ -695,6 +709,12 @@ components:
         addressId: 1
         userId: 3
   responses:
+    Login200:
+      description: JSON Web Token
+      content:
+        text/plain:
+          schema:
+            type: string
     Users200:
       description: JSON array of user objects
       content:
@@ -816,3 +836,10 @@ components:
           schema:
             $ref: '#/components/schemas/TravelEvent'
       required: true
+  securitySchemes:
+    jwt:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      x-bearerInfoFunc: decodeToken
+      x-swagger-router-controller: Auth      
